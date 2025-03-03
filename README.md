@@ -15,7 +15,12 @@
 - Docker (opcional pero recomendable)
   - [WSL 2 feature on Windows](https://learn.microsoft.com/es-es/windows/wsl/install)
   - [Docker Desktop](https://www.docker.com/get-started/)
+  - Alternativas a Docker Desktop
+    - [Podman](https://podman.io/docs/installation)
+    - [Rancher Desktop](https://rancherdesktop.io/)
+
 - Clientes de bases de datos (opcionales)
+  - [DBeaver Community](https://dbeaver.io/download/)
   - [HeidiSQL](https://www.heidisql.com/download.php)
   - [MongoDB Compass](https://www.mongodb.com/try/download/compass)
 
@@ -52,19 +57,26 @@
 ## Documentación
 
 - Spring
-  - https://docs.spring.io/spring-boot/docs/current/reference/html/
-  - https://docs.spring.io/spring-data/commons/docs/current/reference/html/
-  - https://docs.spring.io/spring-data/jpa/docs/current/reference/html/
-  - https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/
-  - https://docs.spring.io/spring-data/redis/docs/current/reference/html/
-  - https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#spring-web
-  - https://docs.spring.io/spring-data/rest/docs/current/reference/html/
-  - https://docs.spring.io/spring-cloud-commons/docs/current/reference/html/#spring-cloud-loadbalancer
-  - https://docs.spring.io/spring-cloud-config/docs/current/reference/html/
-  - https://docs.spring.io/spring-security/reference/index.html
+  - <https://docs.spring.io/spring-boot/docs/current/reference/html/>
+  - <https://docs.spring.io/spring-data/commons/docs/current/reference/html/>
+  - <https://docs.spring.io/spring-data/jpa/docs/current/reference/html/>
+  - <https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/>
+  - <https://docs.spring.io/spring-data/redis/docs/current/reference/html/>
+  - <https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#spring-web>
+  - <https://docs.spring.io/spring-data/rest/docs/current/reference/html/>
+  - <https://docs.spring.io/spring-cloud-commons/docs/current/reference/html/#spring-cloud-loadbalancer>
+  - <https://docs.spring.io/spring-cloud-config/docs/current/reference/html/>
+  - <https://docs.spring.io/spring-security/reference/index.html>
 - [PATRONES de DISEÑO](https://refactoring.guru/es/design-patterns)
 - [Markdown (es)](https://markdown.es/sintaxis-markdown/)
 - [Markdown](https://www.markdownguide.org/basic-syntax/)
+
+## Laboratorios
+
+- [Working a Getting Started guide with STS](https://spring.io/guides/gs/sts)
+- [Building an Application with Spring Boot](https://spring.io/guides/gs/spring-boot)
+- [Testing the Web Layer](https://spring.io/guides/gs/testing-web)
+- [Consumer Driven Contracts](https://spring.io/guides/gs/contract-rest)
 
 ### Fundamentos Back end
 
@@ -99,12 +111,13 @@
 
 ## Ejemplos
 
-- https://github.com/spring-projects/spring-data-examples
-- https://github.com/spring-projects/spring-data-rest-webmvc
-- https://github.com/spring-projects/spring-hateoas-examples
-- https://github.com/spring-projects/spring-amqp-samples
-- https://github.com/rabbitmq/rabbitmq-tutorials/tree/main/spring-amqp
-- https://github.com/spring-projects/spring-kafka/tree/main/samples
+- <https://github.com/spring-projects/spring-data-examples>
+- <https://github.com/spring-projects/spring-data-rest-webmvc>
+- <https://github.com/spring-projects/spring-hateoas-examples>
+- <https://github.com/spring-projects/spring-amqp-samples>
+- <https://github.com/rabbitmq/rabbitmq-tutorials/tree/main/spring-amqp>
+- <https://github.com/spring-projects/spring-kafka/tree/main/samples>
+- <https://github.com/spring-projects/spring-petclinic>
 
 ## Ejercicios
 
@@ -117,8 +130,8 @@
 
 ## Paquetes Java
 
-- https://downloads.mysql.com/archives/get/p/3/file/mysql-connector-java-5.1.49.zip  
-- https://sourceforge.net/projects/hibernate/files/hibernate-orm/5.6.5.Final/hibernate-release-5.6.5.Final.zip/download
+- <https://downloads.mysql.com/archives/get/p/3/file/mysql-connector-java-5.1.49.zip>
+- <https://sourceforge.net/projects/hibernate/files/hibernate-orm/5.6.5.Final/hibernate-release-5.6.5.Final.zip/download>
 
 ## Servidores en Docker
 
@@ -137,11 +150,10 @@
 #### MongoDB
 
     docker run -d --name mongodb -p 27017:27017 -v .:/externo jamarton/mongodb-contactos
-    docker run -d --name mongodb -p 27017:27017 jamarton/mongodb-contactos
 
 #### Redis
 
-    docker run -d --name redis -p 6379:6379 redis
+    docker run -d --name redis -p 6379:6379 -p 6380:8001 -v .:/data redis/redis-stack:latest
 
 #### Apache Cassandra
 
