@@ -24,14 +24,14 @@ public class DemoApplication implements CommandLineRunner {
 //	@Autowired //(required = false)
 //	Servicio srv;
 	
-//	@Autowired //(required = false)
-//	@Qualifier("verdad")
-//	Repositorio repo1;
-//	@Autowired //(required = false)
-//	@Qualifier("mentira")
-//	Repositorio repo2;
 	@Autowired //(required = false)
-	Repositorio repo;
+//	@Qualifier("verdad")
+	Repositorio repo1;
+	@Autowired //(required = false)
+//	@Qualifier("mentira")
+	Repositorio repo2;
+//	@Autowired //(required = false)
+//	Repositorio repo;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -40,7 +40,9 @@ public class DemoApplication implements CommandLineRunner {
 		//AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
 
 //		srv.guardar();
-		repo.guardar();
+//		repo.guardar();
+		repo1.guardar();
+		repo2.guardar();
 	}
 	
 //	@Bean
