@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 public class ServicioImpl implements Servicio {
 	private Repositorio repositorio;
 
-	public ServicioImpl(@Qualifier("verdad") Repositorio repositorio) {
+	public ServicioImpl(/*@Qualifier("verdad")*/ Repositorio repositorio) {
 		this.repositorio = repositorio;
 	}
 
