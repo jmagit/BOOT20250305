@@ -13,6 +13,7 @@ import com.example.ioc.Configuracion;
 import com.example.ioc.Rango;
 import com.example.ioc.Repositorio;
 import com.example.ioc.Servicio;
+import com.example.util.Calculadora;
 
 @SpringBootApplication
 //@ComponentScan(basePackages = "com.example.ioc")
@@ -44,7 +45,7 @@ public class DemoApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		System.err.println("Aplicacion arrancada");
-		ejemplosIOC();
+		ejemplosPruebas();
 	}
 	
 	private void ejemplosIOC() {
@@ -57,6 +58,10 @@ public class DemoApplication implements CommandLineRunner {
 		repo2.guardar();
 		System.err.println("Valor: " + valor);
 		System.err.println("Rango: " + rango);
+	}
+	private void ejemplosPruebas() {
+		var calc = new Calculadora();
+		System.err.println("Suma: " + calc.suma(2, 3));
 	}
 	
 //	@Bean
