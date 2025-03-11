@@ -5,10 +5,10 @@ import java.math.RoundingMode;
 
 public class Calculadora {
 	public int suma(int a, int b) {
-		return a - b;
+		return a + b;
 	}
 	public double suma(double a, double b) {
-		return roundIEEE754(a - b);
+		return roundIEEE754(a + b);
 	}
 	
 	public int divide(int a, int b) {
