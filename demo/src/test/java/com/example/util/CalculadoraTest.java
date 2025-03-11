@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import static org.mockito.Mockito.*;
 
 import com.example.test.utils.Smoke;
 
@@ -47,7 +48,7 @@ class CalculadoraTest {
 		class OK {
 			@Test
 			@DisplayName("Suma dos enteros")
-			//@Tag("Smoke")
+			// @Tag("Smoke")
 			@Smoke
 			void testSuma() {
 //		var calc = new Calculadora();
@@ -74,10 +75,10 @@ class CalculadoraTest {
 
 				assertEquals(0.1, calc.suma(1, -0.9));
 			}
-			
+
 			@DisplayName("Suma dos numeros")
 			@ParameterizedTest(name = "{0} + {1} = {2}")
-			@CsvSource({ "1,2,3", "2,-1,1", "-1,2,1","-2,-1,-3","0,0,0","0.1,0.2,0.3" })
+			@CsvSource({ "1,2,3", "2,-1,1", "-1,2,1", "-2,-1,-3", "0,0,0", "0.1,0.2,0.3" })
 			void testSumaParametrizada(double operando1, double operando2, double esperado) {
 				var calc = new Calculadora();
 
@@ -143,4 +144,34 @@ class CalculadoraTest {
 			}
 		}
 	}
+
+	@Nested
+	@DisplayName("Suplanta")
+	class Suplantaciones {
+		@Test
+		void suplanta() {
+			var calc = mock(Calculadora.class);
+			when(calc.suma(anyInt(), anyInt())).thenReturn(3).thenReturn(5);
+
+			var actual = calc.suma(2, 2);
+			assertEquals(3, actual);
+			assertEquals(5, calc.suma(2, 2));
+			assertEquals(5, calc.suma(7,3));
+		}
+		@Test
+		void suplanta2() {
+			var calc = mock(Calculadora.class);
+			when(calc.suma(anyInt(), anyInt())).thenReturn(4);
+			var obj = new Factura(calc);
+			var actual = obj.calcularTotal(2, 2);
+			assertEquals(4, actual);
+		}
+		@Test
+		void Integracion() {
+			var obj = new Factura(new Calculadora());
+			var actual = obj.calcularTotal(2, 2);
+			assertEquals(4, actual);
+		}
+}
+
 }
