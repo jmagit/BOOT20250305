@@ -165,6 +165,7 @@ class CalculadoraTest {
 			var obj = new Factura(calc);
 			var actual = obj.calcularTotal(2, 2);
 			assertEquals(4, actual);
+			verify(calc).suma(2, 2);
 		}
 		@Test
 		void Integracion() {
