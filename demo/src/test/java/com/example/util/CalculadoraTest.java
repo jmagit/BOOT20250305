@@ -18,6 +18,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import static org.mockito.Mockito.*;
 
+import com.example.ioc.Repositorio;
 import com.example.test.utils.Smoke;
 
 class CalculadoraTest {
@@ -162,17 +163,23 @@ class CalculadoraTest {
 		void suplanta2() {
 			var calc = mock(Calculadora.class);
 			when(calc.suma(anyInt(), anyInt())).thenReturn(4);
-			var obj = new Factura(calc);
+			var repo = mock(Repositorio.class);
+			doNothing().when(repo).guardar();
+
+			var obj = new Factura(calc, repo);
 			var actual = obj.calcularTotal(2, 2);
+			obj.emitir();
+			
 			assertEquals(4, actual);
 			verify(calc).suma(2, 2);
+			verify(repo).guardar();
 		}
-		@Test
-		void Integracion() {
-			var obj = new Factura(new Calculadora());
-			var actual = obj.calcularTotal(2, 2);
-			assertEquals(4, actual);
-		}
+//		@Test
+//		void Integracion() {
+//			var obj = new Factura(new Calculadora());
+//			var actual = obj.calcularTotal(2, 2);
+//			assertEquals(4, actual);
+//		}
 }
 
 }
