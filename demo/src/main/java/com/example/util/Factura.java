@@ -18,6 +18,6 @@ public class Factura {
 	
 	public void emitir() {
 		//...
-//		repositorio.guardar();
+		repositorio.guardar();
 	}
 }
