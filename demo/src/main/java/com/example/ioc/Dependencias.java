@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 public class Dependencias {
 	@Bean
 	Repositorio repositorio(Configuracion config, Registro registro) {
-		System.err.println("soy el bean");
+//		System.err.println("soy el bean");
 		//return new RepositorioMock();
 		return new RepositorioImpl(config, registro);
 	}
