@@ -8,6 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.domain.Sort;
 
 import com.example.domains.contracts.repositories.ActoresRepository;
 import com.example.domains.entities.Actor;
@@ -38,18 +39,24 @@ public class DemoApplication implements CommandLineRunner {
 	private void ejemplosDatos() {
 		// var actor = new Actor(0, "Peoito", "Grillo");
 		// dao.save(actor);
-		var item = dao.findById(204);
-		if(item.isPresent()) {
-			var actor = item.get();
-			actor.setFirstName("Pepito");
-			actor.setLastName(actor.getLastName().toUpperCase());
-			dao.save(actor);
-		} else {
-			System.err.println("No se ha encontrado el actor");
-		}
-		dao.findAll().forEach(System.err::println);
-		dao.deleteById(204);
-		dao.findAll().forEach(System.err::println);
+//		var item = dao.findById(204);
+//		if(item.isPresent()) {
+//			var actor = item.get();
+//			actor.setFirstName("Pepito");
+//			actor.setLastName(actor.getLastName().toUpperCase());
+//			dao.save(actor);
+//		} else {
+//			System.err.println("No se ha encontrado el actor");
+//		}
+//		dao.findAll().forEach(System.err::println);
+//		dao.deleteById(204);
+//		dao.findAll().forEach(System.err::println);
+//		dao.findTop5ByFirstNameStartingWithOrderByLastNameDesc("P").forEach(System.err::println);
+//		dao.findTop5ByFirstNameStartingWith("P", Sort.by("FirstName").ascending()).forEach(System.err::println);
+//		dao.findByActorIdGreaterThan(200).forEach(System.err::println);
+//		dao.findNovedadesJPQL(200).forEach(System.err::println);
+//		dao.findNovedadesSQL(200).forEach(System.err::println);
+		dao.findAll((root, query, builder) -> builder.lessThanOrEqualTo(root.get("actorId"), 5)).forEach(System.err::println);
 	}
 	
 ////	@Autowired //(required = false)
