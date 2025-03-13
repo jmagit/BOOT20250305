@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
+import com.example.domains.contracts.repositories.ActoresRepository;
 import com.example.ioc.Configuracion;
 import com.example.ioc.Rango;
 import com.example.ioc.Repositorio;
@@ -30,8 +31,11 @@ public class DemoApplication implements CommandLineRunner {
 		ejemplosDatos();
 	}
 	
+	@Autowired
+	private ActoresRepository dao;
+	
 	private void ejemplosDatos() {
-		
+		dao.findAll().forEach(System.err::println);
 	}
 	
 ////	@Autowired //(required = false)
