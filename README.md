@@ -149,11 +149,11 @@
 
 #### MongoDB
 
-    docker run -d --name mongodb -p 27017:27017 -v .:/externo jamarton/mongodb-contactos
+    podman run -d --name mongodb -p 27017:27017 -v .:/externo jamarton/mongodb-contactos
 
 #### Redis
 
-    docker run -d --name redis -p 6379:6379 -p 6380:8001 -v .:/data redis/redis-stack:latest
+    podman run -d --name redis -p 6379:6379 -p 6380:8001 -v .:/data redis/redis-stack:latest
 
 #### Apache Cassandra
 
