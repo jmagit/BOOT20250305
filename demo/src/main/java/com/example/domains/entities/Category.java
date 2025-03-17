@@ -5,6 +5,10 @@ import jakarta.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 /**
  * The persistent class for the category database table.
@@ -19,16 +23,21 @@ public class Category implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="category_id", unique=true, nullable=false)
+	@JsonProperty("id")
 	private int categoryId;
 
 	@Column(name="last_update", insertable=false, updatable=false, nullable=false)
+	@JsonIgnore
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
 	private Timestamp lastUpdate;
 
 	@Column(nullable=false, length=25)
+	@JsonProperty("categoria")
 	private String name;
 
 	//bi-directional many-to-one association to FilmCategory
 	@OneToMany(mappedBy="category")
+	@JsonIgnore
 	private List<FilmCategory> filmCategories;
 
 	public Category() {
