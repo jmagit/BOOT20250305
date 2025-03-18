@@ -194,15 +194,23 @@ public class PersonasJobConfiguration {
 	
 	@Bean
 	public Job personasJob(PersonasJobListener listener, JdbcBatchItemWriter<Persona> personaDBItemWriter, Step exportDB2CSVStep,
-			Step importXML2DBStep1, Step exportDB2XMLStep) {
-		return new JobBuilder("personasJob", jobRepository)
+			Step importXML2DBStep1, Step exportDB2XMLStep, 
+			Step copyFilesInDir) {
+//		return new JobBuilder("personasJob", jobRepository)
+//				.incrementer(new RunIdIncrementer())
+//				.listener(listener)
+//				.start(importCSV2DBStep(1, "input/personas-1.csv", personaDBItemWriter)) // CSV to DB
+//				.next(importXML2DBStep1) // XML to DB
+//				.next(exportDB2CSVStep) // DB to CSV
+//				.next(exportDB2XMLStep) // DB to XML
+//				.build();
+		var job = new JobBuilder("personasJob", jobRepository)
 				.incrementer(new RunIdIncrementer())
-				.listener(listener)
-				.start(importCSV2DBStep(1, "input/personas-1.csv", personaDBItemWriter)) // CSV to DB
-				.next(importXML2DBStep1) // XML to DB
-				.next(exportDB2CSVStep) // DB to CSV
-				.next(exportDB2XMLStep) // DB to XML
-				.build();
+				.start(copyFilesInDir);
+		for(int i = 1; i <= 3; i++)
+			job = job.next(importCSV2DBStep(i, "input/personas-" + i +".csv", personaDBItemWriter));
+		job = job.next(exportDB2CSVStep);
+		return job.build();
 	}
 
 }
