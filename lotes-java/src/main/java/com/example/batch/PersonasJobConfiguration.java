@@ -227,7 +227,8 @@ public class PersonasJobConfiguration {
 		return new JobBuilder("photoJob", jobRepository)
 				.incrementer(new RunIdIncrementer())
 				.start(new StepBuilder("photoStep1", jobRepository)
-						.<PhotoDTO, PhotoDTO>chunk(100, transactionManager).reader(photoRestItemReader)
+						.<PhotoDTO, PhotoDTO>chunk(100, transactionManager)
+						.reader(photoRestItemReader)
 						.writer(new FlatFileItemWriterBuilder<PhotoDTO>().name("photoCSVItemWriter")
 								.resource(new FileSystemResource("output/photoData.csv"))
 								.headerCallback(new FlatFileHeaderCallback() {
