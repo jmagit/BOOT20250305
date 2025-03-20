@@ -1,30 +1,33 @@
 package com.example;
 
+import java.util.TreeMap;
+
+import org.springdoc.core.customizers.OpenApiCustomizer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.context.annotation.Bean;
 
 import com.example.domains.contracts.repositories.ActoresRepository;
 import com.example.domains.contracts.services.ActoresService;
-import com.example.domains.entities.Actor;
-import com.example.domains.entities.dtos.ActorDTO;
-import com.example.domains.entities.dtos.ActorShort;
-import com.example.ioc.Configuracion;
-import com.example.ioc.Rango;
-import com.example.ioc.Repositorio;
-import com.example.ioc.Servicio;
 import com.example.util.Calculadora;
 
+import io.swagger.v3.oas.annotations.ExternalDocumentation;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Contact;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.info.License;
 import jakarta.transaction.Transactional;
 
+@OpenAPIDefinition(
+        info = @Info(title = "Microservicio: Demos",  version = "1.0",
+                description = "**Demos** de Microservicios.",
+                license = @License(name = "Apache 2.0", url = "https://www.apache.org/licenses/LICENSE-2.0.html"),
+                contact = @Contact(name = "Javier Martín", url = "https://github.com/jmagit", email = "support@example.com")
+        ),
+        externalDocs = @ExternalDocumentation(description = "Documentación del proyecto", url = "https://github.com/jmagit/curso")
+)
 @SpringBootApplication
 //@ComponentScan(basePackages = "com.example.ioc")
 public class DemoApplication implements CommandLineRunner {
@@ -32,6 +35,13 @@ public class DemoApplication implements CommandLineRunner {
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
 		
+	}
+	@Bean
+	public OpenApiCustomizer sortSchemasAlphabetically() {
+	    return openApi -> {
+	        var schemas = openApi.getComponents().getSchemas();
+	        openApi.getComponents().setSchemas(new TreeMap<>(schemas));
+	    };
 	}
 	
 	@Override
