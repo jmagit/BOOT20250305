@@ -1,0 +1,17 @@
+# Normal
+# empaquetar: mvnw clean package
+FROM openjdk:17-alpine
+COPY target/ms.autentication-0.0.1-SNAPSHOT.jar /usr/app.jar
+ENV PORT=8080
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","/usr/app.jar"]
+
+# Nativa
+# generar: mvnw clean spring-boot:build-image
+# FROM ms.autentication:0.0.1-SNAPSHOT
+# ENV PORT=8080
+# EXPOSE 8080
+
+# crear imagen: docker build -t ms-autentication-server .
+# crear contenedor: docker run -d --name ms-autentication-server -p 8091:8080 --env DISCOVERY_URL=http://host.docker.internal:8761 --env CONFIGSRV_URL=http://host.docker.internal:8888/ ms-autentication-server
+# añadir a red: docker network connect microservicios ms-autentication-server

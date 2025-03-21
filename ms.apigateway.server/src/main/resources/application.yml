@@ -1,0 +1,82 @@
+server:
+  port: ${PORT:8080}
+eureka:
+  client:
+    fetchRegistry: true
+    registerWithEureka: false
+    serviceUrl:
+      defaultZone: ${DISCOVERY_URL:http://localhost:8761}/eureka/
+  instance:
+    appname: apigateway-server
+management:
+  zipkin:
+    tracing:
+      endpoint: ${ZIPKINSRV_URL:http://localhost:9411}/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0
+spring:
+  application:
+    name: ${NOMBRE:apigateway-server}
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+      routes:
+      - id: serv-catalogo
+          #lb:// cuando se va a acceder a través de Eureka
+        predicates:
+          - Path=/api/catalogo/**
+        uri: lb://catalogo-service
+        filters:
+          - RewritePath=/api/catalogo, /
+          - RewriteLocationResponseHeader=AS_IN_REQUEST, Location, ,
+      - id: contactos-service
+        predicates:
+          - Path=/api/contactos/**
+        uri: lb://contactos-service
+        filters:
+          - RewriteLocationResponseHeader=AS_IN_REQUEST, Location, ,
+      - id: serv-demos
+        predicates:
+          - Path=/demos/**
+        uri: lb://demo-service
+        filters:
+          - RewritePath=/demos, /
+          - RewriteLocationResponseHeader=AS_IN_REQUEST, Location, ,
+      - id: serv-autentication
+        predicates:
+          - Method=POST
+          - Path=/login/**
+        uri: lb://autentication-service
+      - id: serv-autentication-user
+        predicates:
+          - Path=/auth/**
+        uri: lb://autentication-service
+        filters:
+          - RewritePath=/auth, /
+      - id: serv-search
+        predicates:
+          - Path=/search/**
+        uri: https://www.google.com/
+        filters:
+          - RewritePath=/search, /
+      - id: mock-server
+        predicates:
+          - Path=/api/**
+        uri: http://localhost:4321
+      - id: front-end
+        predicates:
+          - Path=/**
+        uri: ${FRONTEND_URL:http://localhost:4200}
+logging:
+  level:
+    '[org.springframework.cloud.gateway]': DEBUG
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"

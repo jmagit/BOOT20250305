@@ -1,0 +1,15 @@
+# Normal
+# empaquetar: mvnw clean package
+#FROM openjdk:17-alpine
+#COPY target/ms.config.server-1.0.0.jar /usr/app.jar
+#EXPOSE 8888
+#ENTRYPOINT ["java","-jar","/usr/app.jar"]
+
+# Nativa
+# generar: mvnw clean spring-boot:build-image
+FROM ms.config.server:1.0.0
+EXPOSE 8888
+
+# crear imagen: docker build -t ms-config-server .
+# crear contenedor: docker run -d --name ms-config-server -p 8888:8888 ms-config-server
+# añadir a red: docker network connect microservicios ms-config-server
