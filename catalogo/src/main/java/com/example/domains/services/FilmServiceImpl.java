@@ -1,6 +1,6 @@
 package com.example.domains.services;
 
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -119,7 +119,7 @@ public class FilmServiceImpl implements FilmService {
 	}
 
 	@Override
-	public List<Film> novedades(@NonNull Timestamp fecha) {
+	public List<Film> novedades(@NonNull Date fecha) {
 		return dao.findByLastUpdateGreaterThanEqualOrderByLastUpdate(fecha);
 	}
 
