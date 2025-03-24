@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <con:soapui-workspace name="Pruebas API" soapui-version="5.8.0" xmlns:con="http://eviware.com/soapui/config">
   <con:settings/>
-  <con:project name="demo-ws">C:/Cursos/BOOT20250305/repositorio/e2e/demo-ws-soapui-project.xml</con:project>
+  <con:project status="CLOSED" name="demo-ws">C:/Cursos/BOOT20250305/repositorio/e2e/demo-ws-soapui-project.xml</con:project>
+  <con:project name="calculator">C:/Cursos/BOOT20250305/repositorio/e2e/calculator-soapui-project.xml</con:project>
+  <con:collectInfoForSupport>false</con:collectInfoForSupport>
 </con:soapui-workspace>
