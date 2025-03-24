@@ -112,7 +112,7 @@ public class FilmResource {
 			@Schema(description = "La clasificación por edades asignada a la película", allowableValues = {"G", "PG", "PG-13", "R", "NC-17"})
 			@Pattern(regexp = "^(G|PG|PG-13|R|NC-17)$")
 			String rating,
-			@Schema(description = "Duración máxima de la pelicula", type = "string", allowableValues = {
+			@Schema(description = "Formato de la respuesta", type = "string", allowableValues = {
 					"details", "short" }, defaultValue = "short")
 			String mode
 			) {}
