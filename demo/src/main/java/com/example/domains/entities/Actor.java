@@ -13,6 +13,7 @@ import java.util.Objects;
 
 import com.example.domains.core.entities.AbstractEntity;
 import com.example.domains.core.validations.NIF;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 
 /**
@@ -48,6 +49,7 @@ public class Actor extends AbstractEntity<Actor> implements Serializable {
 
 	//bi-directional many-to-one association to FilmActor
 	@OneToMany(mappedBy="actor", fetch = FetchType.LAZY)
+	@JsonBackReference
 	private List<FilmActor> filmActors;
 
 	public Actor() {

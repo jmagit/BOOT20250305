@@ -1,5 +1,7 @@
 package com.example.domains.entities.dtos;
 
+import org.springframework.data.rest.core.config.Projection;
+
 import com.example.domains.entities.Actor;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -12,6 +14,7 @@ import lombok.NoArgsConstructor;
 
 @Data @AllArgsConstructor
 @Schema(name = "Actor", description = "Datos del actor")
+@Projection(name = "actorDTO", types = { Actor.class })
 public class ActorDTO {
 //	@JsonProperty("id")
 	private int actorId;
