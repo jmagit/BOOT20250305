@@ -259,5 +259,3 @@ Comando:
 
 - [Oficial](https://angular.dev/)
 - [Oficial (legacy)](https://angular.io/docs)
-
-https://us02web.zoom.us/j/82013571165?pwd=M60DqPwvontznNyqcx28ybfz8JaIJf.1
