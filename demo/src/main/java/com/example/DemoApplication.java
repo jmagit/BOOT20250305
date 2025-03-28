@@ -11,12 +11,15 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.domain.Sort;
 
 import com.example.domains.contracts.repositories.ActoresRepository;
+import com.example.domains.contracts.services.ActoresService;
 import com.example.domains.entities.Actor;
 import com.example.ioc.Configuracion;
 import com.example.ioc.Rango;
 import com.example.ioc.Repositorio;
 import com.example.ioc.Servicio;
 import com.example.util.Calculadora;
+
+import jakarta.transaction.Transactional;
 
 @SpringBootApplication
 //@ComponentScan(basePackages = "com.example.ioc")
@@ -28,6 +31,7 @@ public class DemoApplication implements CommandLineRunner {
 	}
 	
 	@Override
+	@Transactional
 	public void run(String... args) throws Exception {
 		System.err.println("Aplicacion arrancada");
 		ejemplosDatos();
@@ -35,7 +39,10 @@ public class DemoApplication implements CommandLineRunner {
 	
 	@Autowired
 	private ActoresRepository dao;
-	
+
+	@Autowired
+	private ActoresService srv;
+
 	private void ejemplosDatos() {
 		// var actor = new Actor(0, "Peoito", "Grillo");
 		// dao.save(actor);
@@ -56,7 +63,24 @@ public class DemoApplication implements CommandLineRunner {
 //		dao.findByActorIdGreaterThan(200).forEach(System.err::println);
 //		dao.findNovedadesJPQL(200).forEach(System.err::println);
 //		dao.findNovedadesSQL(200).forEach(System.err::println);
-		dao.findAll((root, query, builder) -> builder.lessThanOrEqualTo(root.get("actorId"), 5)).forEach(System.err::println);
+//		dao.findAll((root, query, builder) -> builder.lessThanOrEqualTo(root.get("actorId"), 5)).forEach(System.err::println);
+//		srv.getAll().forEach(System.err::println);
+//		var item = srv.getOne(1);
+//		if(item.isPresent()) {
+//			var actor = item.get();
+//			System.err.println(item + "\nPeliculas");
+////			actor.getFilmActors().forEach(fa -> System.err.println(fa.getFilm().getTitle()));
+//			
+//		} else {
+//			System.err.println("No se ha encontrado el actor");
+//		}
+		 var actor = new Actor(0, null, "12345678Z");
+		 if(actor.isValid())
+			 dao.save(actor);
+		 else {
+			System.err.println(actor.getErrorsMessage());
+		}
+
 	}
 	
 ////	@Autowired //(required = false)
