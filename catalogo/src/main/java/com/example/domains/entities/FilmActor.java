@@ -2,7 +2,10 @@ package com.example.domains.entities;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
+
 import java.sql.Timestamp;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 /**
@@ -18,20 +21,28 @@ public class FilmActor implements Serializable {
 	@EmbeddedId
 	private FilmActorPK id;
 
-	@Column(name="last_update", insertable=false, updatable=false, nullable=false)
+	@Column(name="last_update", insertable = false, updatable = false)
 	private Timestamp lastUpdate;
 
 	//bi-directional many-to-one association to Actor
 	@ManyToOne
-	@JoinColumn(name="actor_id", nullable=false, insertable=false, updatable=false)
+	@JoinColumn(name="actor_id", insertable=false, updatable=false)
+	@JsonManagedReference
 	private Actor actor;
 
 	//bi-directional many-to-one association to Film
 	@ManyToOne
-	@JoinColumn(name="film_id", nullable=false, insertable=false, updatable=false)
+	@JoinColumn(name="film_id", insertable=false, updatable=false)
+	@JsonManagedReference
 	private Film film;
 
 	public FilmActor() {
+	}
+
+	public FilmActor(Film film, Actor actor) {
+		super();
+		this.film = film;
+		this.actor = actor;
 	}
 
 	public FilmActorPK getId() {
@@ -66,4 +77,12 @@ public class FilmActor implements Serializable {
 		this.film = film;
 	}
 
+	@PrePersist 
+	@PreUpdate
+	void prePersiste() {
+//		System.err.println("prePersiste(): Bug Hibernate");
+		if (id == null) {
+			setId(new FilmActorPK(film.getFilmId(), actor.getActorId()));
+		}
+	}
 }
