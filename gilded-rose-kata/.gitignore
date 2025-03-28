@@ -1,0 +1,18 @@
+.idea/
+*.iml
+target/
+
+.classpath
+.project
+bin/
+.settings/
+
+# Gradle
+.gradle
+/build/
+
+# Maven
+.mvn/*
+
+# Approvals
+**/.approval_tests_temp
