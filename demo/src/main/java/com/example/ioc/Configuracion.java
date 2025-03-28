@@ -7,5 +7,8 @@ public class Configuracion {
 	public Configuracion() {
 		System.err.println("Configuracion creada");
 	}
+	public void init() {
+		System.err.println("Configuracion inicializada");
+	}
 
 }
