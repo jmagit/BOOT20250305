@@ -1,6 +1,6 @@
 package com.example.domains.services;
 
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,7 +66,7 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public List<Category> novedades(Timestamp fecha) {
+	public List<Category> novedades(Date fecha) {
 		return dao.findByLastUpdateGreaterThanEqualOrderByLastUpdate(fecha);
 	}
 	

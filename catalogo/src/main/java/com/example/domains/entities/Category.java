@@ -10,7 +10,7 @@ import com.example.domains.core.entities.AbstractEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -34,7 +34,7 @@ public class Category extends AbstractEntity<Category> implements Serializable {
 	@Column(name="last_update", insertable = false, updatable = false)
 	@PastOrPresent
 	@JsonIgnore
-	private Timestamp lastUpdate;
+	private Date lastUpdate;
 
 	@NotBlank
 	@Size(max=25)
@@ -66,11 +66,11 @@ public class Category extends AbstractEntity<Category> implements Serializable {
 		this.categoryId = categoryId;
 	}
 
-	public Timestamp getLastUpdate() {
+	public Date getLastUpdate() {
 		return this.lastUpdate;
 	}
 
-	public void setLastUpdate(Timestamp lastUpdate) {
+	public void setLastUpdate(Date lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
 

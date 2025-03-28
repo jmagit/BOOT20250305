@@ -1,7 +1,7 @@
 package com.example.application.resources;
 
 import java.net.URI;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -109,7 +109,7 @@ public class LanguageResource {
 		}
 	}
 
-	public List<Language> novedades(Timestamp fecha) {
+	public List<Language> novedades(Date fecha) {
 		return dao.findByLastUpdateGreaterThanEqualOrderByLastUpdate(fecha);
 	}
 

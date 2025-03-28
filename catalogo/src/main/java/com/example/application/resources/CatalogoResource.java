@@ -1,9 +1,10 @@
 package com.example.application.resources;
 
-import java.sql.Timestamp;
+import java.util.Date;
 import java.time.Instant;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,10 +54,9 @@ public class CatalogoResource {
 	}
 	
 	@GetMapping(path = "/novedades/v1")
-	public NovedadesDTO novedades(@Parameter(example = "2021-01-01 00:00:00") @RequestParam(required = false, defaultValue = "2021-01-01 00:00:00") Timestamp fecha) {
-		// Timestamp fecha = Timestamp.valueOf("2019-01-01 00:00:00");
+	public NovedadesDTO novedades(@Parameter(example = "2021-01-01 00:00:00") @RequestParam(required = false, defaultValue = "2021-01-01 00:00:00") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") Date fecha) {
 		if(fecha == null)
-			fecha = Timestamp.from(Instant.now().minusSeconds(36000));
+			fecha = Date.from(Instant.now().minusSeconds(36000));
 		return srv.novedades(fecha);
 	}
 

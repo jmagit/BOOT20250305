@@ -232,7 +232,8 @@ public class FilmResource {
 	public List<Map<String, String>> getClasificaciones() {
 		return List.of(Map.of("key", "G", "value", "Todos los públicos"),
 				Map.of("key", "PG", "value", "Guía paternal sugerida"),
-				Map.of("key", "PG-13", "value", "Guía paternal estricta"), Map.of("key", "R", "value", "Restringido"),
+				Map.of("key", "PG-13", "value", "Guía paternal estricta"), 
+				Map.of("key", "R", "value", "Restringido"),
 				Map.of("key", "NC-17", "value", "Prohibido para audiencia de 17 años y menos"));
 	}
 

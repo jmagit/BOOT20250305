@@ -2,7 +2,7 @@ package com.example.domains.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
@@ -159,7 +159,7 @@ public class Film extends AbstractEntity<Film> implements Serializable {
 	private String description;
 
 	@Column(name = "last_update", insertable = false, updatable = false, nullable = false)
-	private Timestamp lastUpdate;
+	private Date lastUpdate;
 
 	@Positive
 	private Integer length;
@@ -300,11 +300,11 @@ public class Film extends AbstractEntity<Film> implements Serializable {
 		this.description = description;
 	}
 
-	public Timestamp getLastUpdate() {
+	public Date getLastUpdate() {
 		return this.lastUpdate;
 	}
 
-	public void setLastUpdate(Timestamp lastUpdate) {
+	public void setLastUpdate(Date lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
 
