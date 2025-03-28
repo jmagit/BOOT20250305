@@ -34,7 +34,8 @@ public class FilmEditDTO {
 	private String rating;
 	@Schema(description = "El año en que se estrenó la película", minimum = "1901", maximum = "2155")
 	private Short releaseYear;
-	@Schema(description = "La duración del período de alquiler, en días", minimum = "0", exclusiveMinimum = true)
+	@Schema(description = "La duración del período de alquiler, en días", minimum = "0", exclusiveMinimum = true, maximum = "255",
+			type = "integer", format = "int32", example = "3")
 	@NotNull
 	private Byte rentalDuration;
 	@Schema(description = "El coste de alquilar la película por el período establecido", minimum = "0", exclusiveMinimum = true)

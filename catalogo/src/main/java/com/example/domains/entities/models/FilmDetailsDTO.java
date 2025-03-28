@@ -24,7 +24,7 @@ public class FilmDetailsDTO {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy")
 	@Schema(description = "El año en que se estrenó la película")
 	private Short releaseYear;
-	@Schema(description = "La duración del período de alquiler, en días")
+	@Schema(description = "La duración del período de alquiler, en días", type = "integer")
 	private Byte rentalDuration;
 	@Schema(description = "El coste de alquilar la película por el período establecido")
 	private BigDecimal rentalRate;
