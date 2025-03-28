@@ -39,7 +39,7 @@ public class Actor extends AbstractEntity<Actor> implements Serializable {
 	@Column(name="last_name", nullable=false, length=45)
 	@NotBlank
 	@Size(max = 45, min = 2)
-	@NIF
+//	@NIF
 	private String lastName;
 
 	@Column(name="last_update", insertable=false, updatable=false, nullable=false)
