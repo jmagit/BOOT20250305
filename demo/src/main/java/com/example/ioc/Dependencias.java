@@ -6,7 +6,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class Dependencias {
 	@Bean
-	Repositorio repositorio() {
-		return new RepositorioMock();
+	Repositorio repositorio(Configuracion config, Registro registro) {
+		System.err.println("soy el bean");
+		//return new RepositorioMock();
+		return new RepositorioImpl(config, registro);
 	}
 }

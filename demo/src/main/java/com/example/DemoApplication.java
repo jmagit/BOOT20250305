@@ -21,11 +21,16 @@ public class DemoApplication implements CommandLineRunner {
 		
 	}
 	
-	@Autowired //(required = false)
-	Servicio srv;
+//	@Autowired //(required = false)
+//	Servicio srv;
 	
+//	@Autowired //(required = false)
+//	@Qualifier("verdad")
+//	Repositorio repo1;
+//	@Autowired //(required = false)
+//	@Qualifier("mentira")
+//	Repositorio repo2;
 	@Autowired //(required = false)
-	@Qualifier("mentira")
 	Repositorio repo;
 
 	@Override
