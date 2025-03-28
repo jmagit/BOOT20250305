@@ -129,7 +129,7 @@ public class ApiExceptionHandler {
 
 	@ExceptionHandler({ NotFoundException.class })
 	public ProblemDetail notFoundRequest(Exception exception) {
-		return ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
+		return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, exception.getMessage());
 	}
 
 	@ExceptionHandler({ BadRequestException.class, DuplicateKeyException.class, HttpMessageNotReadableException.class })
@@ -137,13 +137,6 @@ public class ApiExceptionHandler {
 		log.error("Bad Request exception", exception);
 		return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, exception.getMessage());
 	}
-
-	@ExceptionHandler({ org.springframework.security.authorization.AuthorizationDeniedException.class })
-	public ProblemDetail AuthorizationDeniedRequest(Exception exception) {
-		log.error(exception.getMessage(), exception);
-		return ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, exception.getMessage());
-	}
-
 	@ExceptionHandler({ InvalidDataException.class, MethodArgumentNotValidException.class })
 	public ProblemDetail invalidData(Exception exception) {
 		log.error("Invalid Data exception", exception);
