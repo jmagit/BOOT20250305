@@ -30,6 +30,7 @@ import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
@@ -43,6 +44,7 @@ public class ActorResource {
 	}
 	
 	@GetMapping(path = "/v1")
+	@SecurityRequirement(name = "bearerAuth")
 	public List<?> getAll(@RequestParam(required = false, defaultValue = "largo") String modo) {
 		if("short".equals(modo))
 			return (List<?>) srv.getByProjection(Sort.by("firstName", "lastName"), ActorShort.class);
