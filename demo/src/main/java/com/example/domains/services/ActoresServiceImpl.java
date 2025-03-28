@@ -35,7 +35,10 @@ public class ActoresServiceImpl implements ActoresService {
 		if(item == null) {
 			throw new InvalidDataException("El actor no puede ser nulo");
 		}
-		return null;
+		if(item.getActorId() > 0 && dao.existsById(item.getActorId())) {
+			throw new DuplicateKeyException("El actor ya existe");
+		}
+		return dao.save(item);
 	}
 
 	@Override
