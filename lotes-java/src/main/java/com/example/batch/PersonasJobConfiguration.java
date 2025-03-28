@@ -1,5 +1,8 @@
 package com.example.batch;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.sql.DataSource;
 
 import org.springframework.batch.core.Job;
@@ -20,6 +23,10 @@ import org.springframework.batch.item.file.builder.FlatFileItemWriterBuilder;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor;
 import org.springframework.batch.item.file.transform.DelimitedLineAggregator;
+import org.springframework.batch.item.xml.StaxEventItemReader;
+import org.springframework.batch.item.xml.StaxEventItemWriter;
+import org.springframework.batch.item.xml.builder.StaxEventItemReaderBuilder;
+import org.springframework.batch.item.xml.builder.StaxEventItemWriterBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.sql.init.dependency.DependsOnDatabaseInitialization;
@@ -27,10 +34,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.oxm.xstream.XStreamMarshaller;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import com.example.models.Persona;
 import com.example.models.PersonaDTO;
+import com.thoughtworks.xstream.security.AnyTypePermission;
 
 @Configuration
 public class PersonasJobConfiguration {
@@ -111,6 +120,57 @@ public class PersonasJobConfiguration {
 				.writer(personaCSVItemWriter())
 				.build();
 	}
+    
+	// XML a DB
+	
+	public StaxEventItemReader<PersonaDTO> personaXMLItemReader() {
+		XStreamMarshaller marshaller = new XStreamMarshaller();
+		Map<String, Class> aliases = new HashMap<>();
+		aliases.put("Persona", PersonaDTO.class);
+		marshaller.setAliases(aliases);
+		marshaller.setTypePermissions(AnyTypePermission.ANY);
+		return new StaxEventItemReaderBuilder<PersonaDTO>()
+				.name("personaXMLItemReader")
+				.resource(new FileSystemResource("input/Personas.xml"))
+				.addFragmentRootElements("Persona")
+				.unmarshaller(marshaller).build();
+	}	
+	
+	@Bean
+	Step importXML2DBStep1(JdbcBatchItemWriter<Persona> personaDBItemWriter) {
+		return new StepBuilder("importXML2DBStep1", jobRepository)
+				.<PersonaDTO, Persona>chunk(10, transactionManager)
+				.reader(personaXMLItemReader())
+				.processor(personaItemProcessor)
+				.writer(personaDBItemWriter).build();
+	}
+
+	// DB a XML
+	
+	public StaxEventItemWriter<Persona> personaXMLItemWriter() {
+		XStreamMarshaller marshaller = new XStreamMarshaller();
+		Map<String, Class> aliases = new HashMap<>();
+		aliases.put("Persona", Persona.class);
+		marshaller.setAliases(aliases);
+		return new StaxEventItemWriterBuilder<Persona>()
+				.name("personaXMLItemWriter")
+				.resource(new FileSystemResource("output/outputData.xml"))
+				.marshaller(marshaller)
+				.rootTagName("Personas")
+				.overwriteOutput(true)
+				.build();
+	}
+	
+	@Bean
+	Step exportDB2XMLStep(JdbcCursorItemReader<Persona> personaDBItemReader) {
+		return new StepBuilder("exportDB2XMLStep", jobRepository)
+				.<Persona, Persona>chunk(100, transactionManager)
+				.reader(personaDBItemReader)
+				.writer(personaXMLItemWriter())
+				.build();
+	}
+	
+	
 
     // Tasklet
     
@@ -133,12 +193,15 @@ public class PersonasJobConfiguration {
 	// Job
 	
 	@Bean
-	public Job personasJob(PersonasJobListener listener, JdbcBatchItemWriter<Persona> personaDBItemWriter, Step exportDB2CSVStep) {
+	public Job personasJob(PersonasJobListener listener, JdbcBatchItemWriter<Persona> personaDBItemWriter, Step exportDB2CSVStep,
+			Step importXML2DBStep1, Step exportDB2XMLStep) {
 		return new JobBuilder("personasJob", jobRepository)
 				.incrementer(new RunIdIncrementer())
 				.listener(listener)
 				.start(importCSV2DBStep(1, "input/personas-1.csv", personaDBItemWriter)) // CSV to DB
+				.next(importXML2DBStep1) // XML to DB
 				.next(exportDB2CSVStep) // DB to CSV
+				.next(exportDB2XMLStep) // DB to XML
 				.build();
 	}
 
