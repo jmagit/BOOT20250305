@@ -1,5 +1,8 @@
 package com.gildedrose;
 
+/*
+ * Ejemplo de refactorización: https://github.com/jmagit/demos-devops/blob/master/src/main/java/com/gildedrose/GildedRose.java
+ */
 class GildedRose {
     Item[] items;
 
