@@ -13,6 +13,8 @@ import org.springframework.data.domain.Sort;
 import com.example.domains.contracts.repositories.ActoresRepository;
 import com.example.domains.contracts.services.ActoresService;
 import com.example.domains.entities.Actor;
+import com.example.domains.entities.dtos.ActorDTO;
+import com.example.domains.entities.dtos.ActorShort;
 import com.example.ioc.Configuracion;
 import com.example.ioc.Rango;
 import com.example.ioc.Repositorio;
@@ -74,13 +76,18 @@ public class DemoApplication implements CommandLineRunner {
 //		} else {
 //			System.err.println("No se ha encontrado el actor");
 //		}
-		 var actor = new Actor(0, null, "12345678Z");
-		 if(actor.isValid())
-			 dao.save(actor);
-		 else {
-			System.err.println(actor.getErrorsMessage());
-		}
-
+//		 var actor = new Actor(0, null, "12345678Z");
+//		 if(actor.isValid())
+//			 dao.save(actor);
+//		 else {
+//			System.err.println(actor.getErrorsMessage());
+//		}
+//		dao.findAll().forEach(o -> System.err.println(ActorDTO.from(o)));
+//		dao.queryByActorIdGreaterThan(200).forEach(System.err::println);
+//		dao.getByActorIdGreaterThan(200).forEach(o -> System.err.println(o.getId() + " " + o.getNombre()));
+		dao.findByActorIdGreaterThan(200).forEach(System.err::println);
+		dao.findByActorIdGreaterThan(200, ActorDTO.class).forEach(System.err::println);
+		dao.findByActorIdGreaterThan(200, ActorShort.class).forEach(o -> System.err.println(o.getId() + " " + o.getNombre()));
 	}
 	
 ////	@Autowired //(required = false)
