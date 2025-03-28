@@ -8,6 +8,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import com.example.domains.contracts.repositories.ActoresRepository;
@@ -85,9 +87,12 @@ public class DemoApplication implements CommandLineRunner {
 //		dao.findAll().forEach(o -> System.err.println(ActorDTO.from(o)));
 //		dao.queryByActorIdGreaterThan(200).forEach(System.err::println);
 //		dao.getByActorIdGreaterThan(200).forEach(o -> System.err.println(o.getId() + " " + o.getNombre()));
-		dao.findByActorIdGreaterThan(200).forEach(System.err::println);
-		dao.findByActorIdGreaterThan(200, ActorDTO.class).forEach(System.err::println);
-		dao.findByActorIdGreaterThan(200, ActorShort.class).forEach(o -> System.err.println(o.getId() + " " + o.getNombre()));
+//		dao.findByActorIdGreaterThan(200).forEach(System.err::println);
+//		dao.findByActorIdGreaterThan(200, ActorDTO.class).forEach(System.err::println);
+//		dao.findByActorIdGreaterThan(200, ActorShort.class).forEach(o -> System.err.println(o.getId() + " " + o.getNombre()));
+//		dao.findAll(PageRequest.of(1, 10, Sort.by("actorId"))).forEach(System.err::println);
+//		dao.findAllBy(ActorShort.class);
+//		dao.findAll();
 	}
 	
 ////	@Autowired //(required = false)
