@@ -1,0 +1,25 @@
+services:
+  prometheus:
+    container_name: prometheus
+    hostname: prometheus
+    image: ubuntu/prometheus
+    ports:
+      - 9090:9090
+    networks:
+      - microservicios
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+  grafana:
+    container_name: grafana
+    hostname: grafana
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+    depends_on:
+      - prometheus
+    networks:
+      - microservicios
+
+networks:
+  microservicios:
+    external: true
