@@ -1,0 +1,10 @@
+
+    ___________      _________         ----------------------------------------------------------------------------------------------------
+   |           \    /         \       | Application | ${info.app.name} (${info.app.version})
+   |_____       \  /       _   \      |             | ${info.app.description}
+         |       \/       | \   \     | Profile     | ${spring.profiles.active:DEFAULT}
+         |                |__\   \    | Java VM     | ${java.specification.vendor} ${java.specification.version} (v${java.version})
+  ___    |    |\    /|     ___    \   | Spring Boot |${spring-boot.formatted-version}
+ |   |___|    | \  / |    |   \    \  | Process ID  | ${PID} Port: ${server.port}
+ |____________|  \/  |____|    \____\  ----------------------------------------------------------------------------------------------------
+                                      Copyright © All rights reserved.
