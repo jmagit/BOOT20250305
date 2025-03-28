@@ -4,14 +4,22 @@ import java.util.TreeMap;
 import java.util.logging.Logger;
 
 import org.springdoc.core.customizers.OpenApiCustomizer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.event.EventListener;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.data.web.config.EnableSpringDataWebSupport.PageSerializationMode;
+
+import com.example.domains.event.DomainEvent;
+import com.example.domains.event.EntityChangedEvent;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
@@ -51,6 +59,49 @@ public class CatalogoApplication implements CommandLineRunner {
             openApi.getComponents().setSchemas(new TreeMap<>(schemas));
         };
     }
+    
+    // Application metrics: https://microservices.io/patterns/observability/application-metrics.html
+    
+//    @Bean
+//    HttpExchangeRepository httpTraceRepository() {
+//        return new InMemoryHttpExchangeRepository();
+//    }
+//
+//    @Bean
+//    AuditEventRepository auditEventRepository() {
+//        return new InMemoryAuditEventRepository();
+//    }
+//    @Bean
+//    AuthenticationEventPublisher authenticationEventPublisher
+//            (ApplicationEventPublisher applicationEventPublisher) {
+//        return new DefaultAuthenticationEventPublisher(applicationEventPublisher);
+//    }
+    
+    // Domain events: https://microservices.io/patterns/data/domain-event.html
+
+//	@Autowired
+//	KafkaTemplate<String, String> kafkaTemplate;
+//	
+//	@Bean
+//	NewTopic entityChangedTopic() {
+//		return TopicBuilder.name("catalogo-events").partitions(1).replicas(1).build();
+//	}
+//	ObjectMapper converter = new ObjectMapper();
+//
+//	@EventListener
+//	void evento(EntityChangedEvent event) throws JsonProcessingException {
+//		kafkaTemplate.send("catalogo-events", event.entity(), converter.writeValueAsString(event))
+//			.thenAccept(result -> log.warning(String.format("EVENT: %s OFFSET: %s", event, result.getRecordMetadata().offset())))
+//			.exceptionally(ex -> {
+//				log.severe(String.format("EVENT: %s ERROR: %s", event, ex.getMessage()));
+//				return null;
+//			});
+//	}
+//	
+//	@EventListener
+//	void evento(DomainEvent event) {
+//		System.err.println(event);
+//	}
 
 //	@Autowired
 //	FilmRepository dao;
