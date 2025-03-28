@@ -150,26 +150,26 @@ public class GildedRoseApprovalTest {
 //        		);
 //	}
 
-//	@Disabled
-	@ParameterizedTest(name = "{0} => sellIn: {1} quality: {2} –> sellIn: {3} quality: {4}")
-	@CsvFileSource(resources = "/casos-de-prueba.csv", numLinesToSkip = 1)
-	void datasourceTest(String producto, int sellIn, int quality, int sellInResult, int qualityResult) {
-		String name = producto.replace("\'", "");
-//		assumeFalse("Conjured Mana Cake".equals(name));
-		Item product = new Item(name, sellIn, quality);
-        GildedRose app = new GildedRose(new Item[] { 
-        		product
-        });
-        app.updateQuality();
-        assertAll(name,
-        		() -> assertEquals(name, product.name, "name"),
-        		() -> assertEquals(sellInResult, product.sellIn, "sellIn"),
-        		() -> assertEquals(qualityResult, product.quality, "quality")
-        		);
-	}
+////	@Disabled
+//	@ParameterizedTest(name = "{0} => sellIn: {1} quality: {2} –> sellIn: {3} quality: {4}")
+//	@CsvFileSource(resources = "/casos-de-prueba.csv", numLinesToSkip = 1)
+//	void datasourceTest(String producto, int sellIn, int quality, int sellInResult, int qualityResult) {
+//		String name = producto.replace("\'", "");
+////		assumeFalse("Conjured Mana Cake".equals(name));
+//		Item product = new Item(name, sellIn, quality);
+//        GildedRose app = new GildedRose(new Item[] { 
+//        		product
+//        });
+//        app.updateQuality();
+//        assertAll(name,
+//        		() -> assertEquals(name, product.name, "name"),
+//        		() -> assertEquals(sellInResult, product.sellIn, "sellIn"),
+//        		() -> assertEquals(qualityResult, product.quality, "quality")
+//        		);
+//	}
 	
 	@Test
-	@Disabled
+//	@Disabled
 	void instantanea() {
 		Item[] items = new Item[] { 
 				new Item("+5 Dexterity Vest", 10, 20), 
