@@ -1,4 +1,4 @@
-<h1>Hola {{nombre()}}</h1>
+<h1>Hola {{nombre() | uppercase}}</h1>
 <p>
   <input type="text" [(ngModel)]="nombre" placeholder="Escribe tu nombre" />
   <input type="button" value="saludar" (click)="saluda()" />
@@ -19,18 +19,18 @@
 @if(visible()) {
   <p>ahora existo con flujo</p>
 }
-<p [ngClass]="estetica">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+<p [ngClass]="estetica()">Lorem ipsum dolor sit amet consectetur adipisicing elit.
   Pariatur eius autem impedit maiores cupiditate accusamus officia laudantium quod suscipit
   rerum perferendis nam possimus odio praesentium animi culpa, libero voluptatibus voluptatem.
 </p>
 <p [class.semivisible]="invisible()">Ahora me ves bien</p>
-<p>Fecha: {{Fecha}}</p>
-<p>Calcula: 2 + 2 = {{2 + 2}} = {{ calcula(2, 2) }}</p>
+<p>Fecha: {{Fecha | date:'dd/MMM/yyyy'}}</p>
+<p>Calcula: 2 + 2 = {{2 + 2}} = {{ calcula(2, 2) | currency:'EUR':'symbol':'1.2-2' }}</p>
 
 <ul>
-@for(item of listado(); track item.id ) {
+@for(item of listado() | slice:-5; track item.id ) {
   <li [style.background-color]="$odd ? 'LightBlue' : 'Lavender'">
-    {{item.nombre}} ({{item.id}}) [Elemento {{$index + 1}} de {{listado().length}}]
+    {{item.nombre | titlecase}} ({{item.id}}) [Elemento {{$index + 1}} de {{listado().length}}]
   </li>
 }
 </ul>
@@ -44,3 +44,4 @@
   <input type="text" value="Tabarnia" #txtProvincia >
   <input type="button" value="Añadir" (click)="add(txtProvincia.value)" />
 </p>
+<p>{{listado() | json}}>
