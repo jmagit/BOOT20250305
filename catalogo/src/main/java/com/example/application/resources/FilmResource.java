@@ -237,6 +237,12 @@ public class FilmResource {
 				Map.of("key", "NC-17", "value", "Prohibido para audiencia de 17 años y menos"));
 	}
 
+	@GetMapping(path = "/contenido-adicional")
+	@Operation(summary = "Listado del contenido adicional posible")
+	public List<String> getSpecialFeatures() {
+		return List.of(Film.SpecialFeature.values()).stream().map(o -> o.getValue()).toList();
+	}
+
 	@Operation(summary = "Añadir una nueva pelicula")
 	@ApiResponse(responseCode = "201", description = "Pelicula añadida")
 	@ApiResponse(responseCode = "404", description = "Pelicula no encontrada")

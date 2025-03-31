@@ -102,11 +102,7 @@ public class LanguageResource {
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	@JsonView(Language.Partial.class)
 	public void delete(@PathVariable int id) throws Exception {
-		try {
-			dao.deleteById(id);
-		} catch (Exception e) {
-			throw new NotFoundException("Missing item", e);
-		}
+		dao.deleteById(id);
 	}
 
 	public List<Language> novedades(Date fecha) {

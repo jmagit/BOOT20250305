@@ -2,11 +2,13 @@ package com.example;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -136,6 +138,22 @@ public class ApiExceptionHandler {
 	public ProblemDetail badRequest(Exception exception) {
 		log.error("Bad Request exception", exception);
 		return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, exception.getMessage());
+	}
+	@ExceptionHandler({ SQLIntegrityConstraintViolationException.class, DataIntegrityViolationException.class })
+	public ProblemDetail badDataRequest(Exception exception) {
+		log.error("Data exception", exception);
+		var problem = exception.getMessage().toLowerCase();
+		if (problem.contains("foreign key constraint fails"))
+			return ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, "No se pueden eliminar los datos porque estan siendo utilizados");
+		if (problem.contains("duplicate key"))
+			problem = "Ya existe un registro con los mismos datos";
+		else if (problem.contains("duplicate entry"))
+			problem = "Datos duplicados";
+		else if (problem.contains("check constraint"))
+			problem = "Error en la validacion de datos";
+		else
+			problem = "Error al guardar los datos";
+		return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, problem);
 	}
 	@ExceptionHandler({ InvalidDataException.class, MethodArgumentNotValidException.class })
 	public ProblemDetail invalidData(Exception exception) {
