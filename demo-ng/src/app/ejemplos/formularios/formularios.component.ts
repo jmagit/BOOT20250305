@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ErrorMessagePipe } from '@my/core';
 
 @Component({
   selector: 'app-formularios',
-  imports: [FormsModule],
+  imports: [FormsModule, ErrorMessagePipe, ],
   templateUrl: './formularios.component.html',
   styleUrl: './formularios.component.css'
 })

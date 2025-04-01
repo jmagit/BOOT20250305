@@ -4,45 +4,53 @@
   <input type="number" value="1" #txtId >
   <input type="button" value="edit" (click)="edit(+txtId.value)">
 </p>
-<form #miForm>
+<form #miForm="ngForm">
   <div>
     <label for="id">id:</label>
     <input type="number" id="id" name="id" [(ngModel)]="elemento.id" #id="ngModel" required>
+    <output class="error" [hidden]="!id.hasError('required') || miForm.pristine">Es obligatorio</output>
   </div>
   <div>
     <label for="nombre">nombre:</label>
     <input type="text" id="nombre" name="nombre" [(ngModel)]="elemento.nombre" #nombre="ngModel"
       required minlength="2" maxlength="10">
-  </div>
+    <output class="error" [hidden]="!nombre.hasError('required')">Es obligatorio</output>
+    <output class="error" [hidden]="!nombre.hasError('minlength') && !nombre.hasError('maxlength')">Debe tener entre 2 y 10 letras</output>
+    </div>
   <div>
     <label for="apellidos">apellidos:</label>
     <input type="text" id="apellidos" name="apellidos" [(ngModel)]="elemento.apellidos" #apellidos="ngModel"
       minlength="2" maxlength="10">
+    <output class="error" [hidden]="!apellidos.hasError('minlength') && !apellidos.hasError('maxlength')">Debe tener entre 2 y 10 letras</output>
   </div>
   <div>
     <label for="correo">correo:</label>
-    <input type="email" id="correo" name="correo" [(ngModel)]="elemento.correo" #correo="ngModel">
+    <input type="email" id="correo" name="correo" [(ngModel)]="elemento.correo" #correo="ngModel" email>
+    <output class="error" [hidden]="correo.valid">{{correo.errors | errormsg}}</output>
   </div>
   <div>
     <label for="fAlta">fAlta:</label>
     <input type="date" id="fAlta" name="fAlta" [(ngModel)]="elemento.fAlta" #fAlta="ngModel">
+    <output class="error" [hidden]="fAlta.valid">{{fAlta.errors | errormsg}}</output>
   </div>
   <div>
     <label for="edad">edad:</label>
     <input type="number" id="edad" name="edad" [(ngModel)]="elemento.edad" #edad="ngModel"
       min="16" max="67">
+    <output class="error" [hidden]="edad.valid">{{edad.errors | errormsg}}</output>
   </div>
   <div>
     <label for="nif">nif:</label>
     <input type="text" id="nif" name="nif" [(ngModel)]="elemento.nif" #nif="ngModel"
       pattern="^\d{1,8}[a-zA-Z]$">
+    <output class="error" [hidden]="nif.valid">{{nif.errors | errormsg:'Debe tener de 1 a 8 dígitos y una letra al final'}}</output>
   </div>
   <div>
     <label for="activo">activo:</label>
     <input type="checkbox" id="activo" name="activo" [(ngModel)]="elemento.activo" #activo="ngModel">
   </div>
   <div>
-    <input type="button" value="enviar" (click)="send()">
+    <input type="button" value="enviar" (click)="send()" [disabled]="miForm.invalid">
     <input type="button" value="volver" (click)="cancel()">
   </div>
 </form>
