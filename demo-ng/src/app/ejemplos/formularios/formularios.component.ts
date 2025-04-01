@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './formularios.component.css'
 })
 export class FormulariosComponent {
-  public elemento: any = { id: 1, nombre: 'Pepito', apellidos: 'Grillo', correo: 'pgrillo@example.com', fAlta: '2025-01-01', edad: 99, nif: '12345678z', activo: true}
+  public elemento: any = { }
   public modo: 'add' | 'edit' = 'add'
 
   add() {
