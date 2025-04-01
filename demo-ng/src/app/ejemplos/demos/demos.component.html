@@ -1,4 +1,4 @@
-<h1>Hola {{nombre() | uppercase}}</h1>
+<h1>Hola {{nombre() | elipsis:10 | uppercase}}</h1>
 <p>
   <input type="text" [(ngModel)]="nombre" placeholder="Escribe tu nombre" />
   <input type="button" value="saludar" (click)="saluda()" />
@@ -34,14 +34,18 @@
   </li>
 }
 </ul>
+<app-card header="Mantenimiento de provincias">
 <p>
   <select [(ngModel)]="idProvincia">
     @for(item of listado(); track item.id ) {
-      <option [value]="item.id" >{{item.nombre}}</option>>
+      <option [value]="item.id" >{{item.nombre | capitalize}}</option>>
     }
   </select>
   Seleccionado: {{idProvincia()}}
   <input type="text" value="Tabarnia" #txtProvincia >
   <input type="button" value="Añadir" (click)="add(txtProvincia.value)" />
 </p>
-<p>{{listado() | json}}>
+</app-card>
+<my-sizer [(size)]="fontSize">Esto se pierde</my-sizer>
+<p [style.font-size.px]="fontSize()">{{listado() | json}}>
+<app-form-buttons send-text="enviar" (send)="saluda()" abandon-text="volver" (abandon)="despide()" />
