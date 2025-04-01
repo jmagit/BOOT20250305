@@ -1,0 +1,54 @@
+<div class="col">
+  <div class="card card-container">
+    <img id="profile-img" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" alt="User icon" class="profile-img-card" />
+    @if (!loginSrv.isAuthenticated) {
+<form class="card-text" name="form"
+      (ngSubmit)="miForm.form.valid && logInOut()" #miForm="ngForm" [class.was-validated]="miForm.submitted">
+      <div class="card-text">
+        <label for="username" class="form-label">Usuario</label>
+        <input type="text" class="form-control" id="username" name="username" [(ngModel)]="txtUsuario" required
+          #username="ngModel" placeholder="Usuario" autocomplete="username" />
+        @if (username.errors && miForm.submitted) {
+<div class="invalid-feedback" role="alert">Es obligatorio</div>
+}
+      </div>
+      <div class="card-text">
+        <label for="password" class="form-label">Contraseña</label>
+        <input type="password" class="form-control" id="password" name="password" [(ngModel)]="txtPassword"
+          #password="ngModel" required minlength="8" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$"
+          placeholder="Contraseña" autocomplete="current-password" />
+        @if (password.errors && miForm.submitted) {
+<div class="invalid-feedback" role="alert">
+          <div [hidden]="!password.hasError('required')">Es obligatorio</div>
+          <div [hidden]="!password.errors['minlength']">Debe al menos 8 caracteres</div>
+          <div [hidden]="!password.hasError('pattern')">Debe contener mayúsculas, minúsculas, dígitos y símbolos</div>
+        </div>
+}
+      </div>
+      <div class="btn-group my-2">
+        <button type="submit" class="btn btn-primary btn-block">Acceder</button>
+        <button type="button" class="btn btn-info btn-block" (click)="registrar()">Registrarse</button>
+      </div>
+      <div class="row">
+        @if (errorMessage && miForm.submitted && !loginSrv.isAuthenticated) {
+<div class="alert alert-danger" role="alert">
+          Acceso denegado: {{ errorMessage }}
+        </div>
+}
+      </div>
+    </form>
+}
+
+    @if (loginSrv.isAuthenticated) {
+<div class="alert alert-success">
+      <div>
+        <h2>Hola {{loginSrv.Name}}</h2>
+        <p>Has accedido como: {{ loginSrv.Roles.join(', ') }}.</p>
+      </div>
+      <div class="text-center">
+        <button type="button" class="btn btn-danger" (click)="logInOut()">Desconectar</button>
+      </div>
+    </div>
+}
+  </div>
+</div>

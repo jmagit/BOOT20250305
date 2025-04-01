@@ -1,0 +1,23 @@
+@if (visible) {
+  @if (loginSrv.isAuthenticated) {
+    <small class="my-2 my-lg-0" >
+      <span class="text mr-2" id="userData">Hola {{loginSrv.Name}} </span>
+      <button class="btn btn-outline-dark btn-sm" type="button" title="desconectar" aria-label="enviar logout" (click)="logInOut()"><i class="fas fa-sign-out-alt"></i></button>
+    </small>
+  } @else {
+    <form #logForm="ngForm" class="form-inline my-2 my-lg-0">
+      <div class="input-group" role="group" aria-label="Login Form">
+        <input name="usr" class="form-control-sm" [size]="8" type="text" [(ngModel)]="txtUsuario" required minlength="4"
+          placeholder="Usuario" autocomplete="username">
+        <input name="pwd" class="form-control-sm" [size]="8" type="password" [(ngModel)]="txtPassword" required
+          minlength="8" placeholder="Contraseña" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$" autocomplete="current-password">
+        <button class="btn btn-outline-dark btn-sm" type="button" title="enviar login" [disabled]="logForm.invalid" (click)="logInOut()">
+          <i class="fas fa-sign-in-alt"></i>
+        </button>
+        <button class="btn btn-outline-dark btn-sm" type="button" title="registrar usuario" (click)="registrar()">
+          <i class="fas fa-user-plus"></i>
+        </button>
+      </div>
+    </form>
+  }
+}
