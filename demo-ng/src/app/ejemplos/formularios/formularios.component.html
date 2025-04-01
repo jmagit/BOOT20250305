@@ -20,12 +20,13 @@
   <div>
     <label for="apellidos">apellidos:</label>
     <input type="text" id="apellidos" name="apellidos" [(ngModel)]="elemento.apellidos" #apellidos="ngModel"
-      minlength="2" maxlength="10">
+      minlength="2" maxlength="10" uppercase>
     <output class="error" [hidden]="!apellidos.hasError('minlength') && !apellidos.hasError('maxlength')">Debe tener entre 2 y 10 letras</output>
+    {{ apellidos.errors | json}}
   </div>
   <div>
     <label for="correo">correo:</label>
-    <input type="email" id="correo" name="correo" [(ngModel)]="elemento.correo" #correo="ngModel" email>
+    <input type="email" id="correo" name="correo" [(ngModel)]="elemento.correo" #correo="ngModel">
     <output class="error" [hidden]="correo.valid">{{correo.errors | errormsg}}</output>
   </div>
   <div>
@@ -42,7 +43,7 @@
   <div>
     <label for="nif">nif:</label>
     <input type="text" id="nif" name="nif" [(ngModel)]="elemento.nif" #nif="ngModel"
-      pattern="^\d{1,8}[a-zA-Z]$">
+      pattern="^\d{1,8}[a-zA-Z]$" nifnie>
     <output class="error" [hidden]="nif.valid">{{nif.errors | errormsg:'Debe tener de 1 a 8 dígitos y una letra al final'}}</output>
   </div>
   <div>

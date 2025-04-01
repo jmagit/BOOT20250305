@@ -45,10 +45,9 @@ export class UppercaseValidator implements Validator {
 }
 
 export function lowercaseValidator(): ValidatorFn {
-  // eslint-disable-next-line @typescript-eslint/consistent-indexed-object-style
-  return (control: AbstractControl): { [key: string]: any } | null => {
+  return (control: AbstractControl): Record<string, any> | null => {
     if (!control.value) { return null; }
-    return control.value === control.value.toLowerCase() ? null : { lowercase: 'Tiene que estar en minúsculas' }
+    return control.value === control.value.toLowercase() ? null : { lowercase: 'Tiene que estar en mayúsculas' }
   };
 }
 @Directive({
