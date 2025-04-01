@@ -5,12 +5,13 @@ import { DemosComponent } from './ejemplos/demos/demos.component';
 import { AjaxWaitComponent, NotificationComponent, NotificationModalComponent } from './main';
 import { NotificationService, NotificationType } from './common-services';
 import { FormulariosComponent } from './ejemplos/formularios/formularios.component';
+import { HeaderComponent } from "./main/header/header.component";
+import { FooterComponent } from "./main/footer/footer.component";
 
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, FormulariosComponent, NotificationComponent, /*NotificationModalComponent,*/
-    AjaxWaitComponent,
-   ],
+    AjaxWaitComponent, HeaderComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

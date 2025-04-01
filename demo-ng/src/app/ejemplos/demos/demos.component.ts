@@ -9,7 +9,7 @@ import GraficoSvgComponent from '../grafico-svg/grafico-svg.component';
 
 @Component({
   selector: 'app-demos',
-  imports: [FormsModule, CommonModule, ElipsisPipe, CapitalizePipe, SizerComponent, FormButtonsComponent, CardComponent, GraficoSvgComponent, ],
+  imports: [FormsModule, CommonModule, ElipsisPipe, CapitalizePipe, SizerComponent, FormButtonsComponent, CardComponent, ],
   templateUrl: './demos.component.html',
   styleUrl: './demos.component.css'
 })
