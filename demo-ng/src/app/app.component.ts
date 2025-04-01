@@ -4,11 +4,10 @@ import { LoggerService } from '@my/core';
 import { DemosComponent } from './ejemplos/demos/demos.component';
 import { NotificationComponent, NotificationModalComponent } from './main';
 import { NotificationService, NotificationType } from './common-services';
-import { HomeComponent } from "./main/home/home.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, DemosComponent, NotificationComponent, NotificationModalComponent, HomeComponent],
+  imports: [RouterOutlet, DemosComponent, NotificationComponent, /*NotificationModalComponent,*/ ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
