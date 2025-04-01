@@ -4,7 +4,8 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { ERROR_LEVEL, LoggerService } from '@my/core';
 import { environment } from 'src/environments/environment';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { ajaxWaitInterceptor } from './main';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -12,6 +13,6 @@ export const appConfig: ApplicationConfig = {
     { provide: ERROR_LEVEL, useValue: environment.ERROR_LEVEL },
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([ ajaxWaitInterceptor ])),
   ]
 };

@@ -2,13 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { LoggerService } from '@my/core';
 import { DemosComponent } from './ejemplos/demos/demos.component';
-import { NotificationComponent, NotificationModalComponent } from './main';
+import { AjaxWaitComponent, NotificationComponent, NotificationModalComponent } from './main';
 import { NotificationService, NotificationType } from './common-services';
 import { FormulariosComponent } from './ejemplos/formularios/formularios.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, FormulariosComponent, NotificationComponent, /*NotificationModalComponent,*/ ],
+  imports: [RouterOutlet, FormulariosComponent, NotificationComponent, /*NotificationModalComponent,*/
+    AjaxWaitComponent,
+   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
