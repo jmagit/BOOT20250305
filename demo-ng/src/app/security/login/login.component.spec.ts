@@ -4,11 +4,13 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { NotificationService, WindowService } from 'src/app/common-services';
 import { LoginService } from '../security.service';
 import { AuthService } from '..';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { LoggerService } from '@my/core';
 import { FormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
+import { provideHttpClient } from '@angular/common/http';
+import { provideLocationMocks } from '@angular/common/testing';
+import { provideRouter } from '@angular/router';
 
 describe('LoginComponent', () => {
   const apiURL = environment.securityApiURL
@@ -19,8 +21,10 @@ describe('LoginComponent', () => {
   beforeEach(async() => {
     spyOn(console, 'warn')
     TestBed.configureTestingModule({
-        providers: [LoginService, AuthService, NotificationService, LoggerService,],
-        imports: [HttpClientTestingModule, RouterTestingModule, FormsModule, LoginComponent],
+        providers: [LoginService, AuthService, NotificationService, LoggerService,
+          provideHttpClient(), provideHttpClientTesting(), provideRouter([]), provideLocationMocks(),
+        ],
+        imports: [FormsModule, LoginComponent],
         schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
@@ -98,8 +102,10 @@ describe('LoginFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    providers: [LoginService, AuthService, NotificationService, LoggerService, WindowService],
-    imports: [HttpClientTestingModule, RouterTestingModule, FormsModule, LoginFormComponent],
+    providers: [LoginService, AuthService, NotificationService, LoggerService, WindowService,
+      provideHttpClient(), provideHttpClientTesting(), provideRouter([]), provideLocationMocks(),
+    ],
+    imports: [FormsModule, LoginFormComponent],
     schemas: [NO_ERRORS_SCHEMA]
 })
     .compileComponents();

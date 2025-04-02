@@ -1,18 +1,32 @@
-<nav class="navbar navbar-expand-lg bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item"><a class="nav-link" routerLink="/inicio" routerLinkActive="active">inicio</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="/demos" routerLinkActive="active">demos</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="/esto/es/un/formulario" routerLinkActive="active">formulario</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="/un.svg" routerLinkActive="active">grafico</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="/falsa" routerLinkActive="active">falsa</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="/config" routerLinkActive="active">config</a></li>
-      </ul>
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" routerLink="/" tabindex="0"><img class="rounded" src="images/logo.png"
+          alt="Logotipo corporativo" height="60"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark"
+        aria-controls="offcanvasNavbarDark" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="offcanvas offcanvas-end text-bg-light" tabindex="-1" id="offcanvasNavbarDark"
+        aria-labelledby="offcanvasNavbarDarkLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">Menu</h5>
+          <button type="button" class="btn-close btn-close-black" data-bs-dismiss="offcanvas"
+            aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item"><a class="nav-link" data-bs-dismiss="offcanvas" routerLinkActive="active" routerLink="/inicio"><i class="fa-solid fa-house"></i> inicio</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-dismiss="offcanvas" routerLinkActive="active" routerLink="/demos"><i class="fa-solid fa-person-chalkboard"></i> demos</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-dismiss="offcanvas" routerLinkActive="active" routerLink="/esto/es/un/formulario"><i class="fa-solid fa-chalkboard-user"></i> formulario</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-dismiss="offcanvas" routerLinkActive="active" routerLink="/un.svg"><i class="fa-solid fa-image"></i> gráfico</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-dismiss="offcanvas" routerLinkActive="active" routerLink="/falsa"><i class="fa-solid fa-ban"></i> falsa</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-dismiss="offcanvas" routerLinkActive="active" routerLink="/config"><i class="fa-solid fa-gears"></i> config</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-dismiss="offcanvas" routerLinkActive="active" routerLink="/config/datos"><i class="fa-solid fa-gears"></i> datos</a></li>
+          </ul>
+          <app-login />
+        </div>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
+</header>

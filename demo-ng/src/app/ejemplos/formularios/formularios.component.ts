@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import { NotificationService } from 'src/app/common-services';
+import { FormButtonsComponent } from "../../common-components/form-buttons/form-buttons.component";
 
 export abstract class RESTDAOService<T, K> {
   protected baseUrl = environment.apiUrl;
@@ -42,7 +43,7 @@ export class PersonasDaoService extends RESTDAOService<any, number> {
 }
 @Component({
   selector: 'app-formularios',
-  imports: [FormsModule, ErrorMessagePipe, NIFNIEValidator, TypeValidator, UppercaseValidator, JsonPipe ],
+  imports: [FormsModule, ErrorMessagePipe, NIFNIEValidator, TypeValidator, UppercaseValidator, JsonPipe, FormButtonsComponent],
   templateUrl: './formularios.component.html',
   styleUrl: './formularios.component.css'
 })

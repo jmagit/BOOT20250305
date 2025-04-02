@@ -50,8 +50,9 @@
     <label for="activo">activo:</label>
     <input type="checkbox" id="activo" name="activo" [(ngModel)]="elemento.activo" #activo="ngModel">
   </div>
-  <div>
+  <app-form-buttons send-text="enviar" (send)="send()" [send-disabled]="miForm.invalid" abandon-text="volver" (abandon)="cancel()" />
+  <!-- <div>
     <input type="button" value="enviar" (click)="send()" [disabled]="miForm.invalid">
     <input type="button" value="volver" (click)="cancel()">
-  </div>
+  </div> -->
 </form>

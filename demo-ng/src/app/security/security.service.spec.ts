@@ -1,13 +1,13 @@
-import { HttpClient, HttpContext, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClient, HttpContext, HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { inject, TestBed } from '@angular/core/testing';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import { ActivatedRouteSnapshot, provideRouter, Router, RouterStateSnapshot } from '@angular/router';
 import { LoggerService } from '@my/core';
 import { environment } from 'src/environments/environment';
 import { AuthInterceptor, AuthService, LoginService, AuthCanActivateFn, InRoleCanActivate, AUTH_REQUIRED, AuthWithRedirectCanActivate } from './security.service';
+import { provideLocationMocks } from '@angular/common/testing';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -52,8 +52,7 @@ describe('LoginService ', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [AuthService, HttpClient],
+      providers: [AuthService, provideHttpClient(), provideHttpClientTesting(), ],
     });
     service = TestBed.inject(LoginService);
     auth = TestBed.inject(AuthService);
@@ -223,9 +222,9 @@ describe('AuthInterceptor', () => {
     TestBed.configureTestingModule({
       providers: [
         AuthInterceptor, AuthService,
-        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true, }
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true, },
+        provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting(),
       ],
-      imports: [HttpClientTestingModule,],
     });
     service = TestBed.inject(AuthInterceptor);
     auth = TestBed.inject(AuthService);
@@ -373,17 +372,14 @@ describe('AuthCanActivateFn', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    providers: [AuthService, Location,],
-    imports: [
-        RouterTestingModule.withRoutes([
-            { path: '', pathMatch: 'full', component: TestHomeComponent },
-            { path: 'login', component: TestComponent },
-            { path: 'test', component: TestComponent, canActivate: [AuthCanActivateFn] },
-            { path: 'redirect', component: TestComponent, canActivate: [AuthWithRedirectCanActivate('/login')] },
-        ]),
-        TestHomeComponent, TestComponent
-    ]
-});
+    providers: [AuthService, Location, provideRouter([
+          { path: '', pathMatch: 'full', component: TestHomeComponent },
+          { path: 'login', component: TestComponent },
+          { path: 'test', component: TestComponent, canActivate: [AuthCanActivateFn] },
+          { path: 'redirect', component: TestComponent, canActivate: [AuthWithRedirectCanActivate('/login')] },
+      ]), provideLocationMocks(),],
+    imports: [ TestHomeComponent, TestComponent ]
+    });
     router = TestBed.inject(Router);
     auth = TestBed.inject(AuthService);
     location = TestBed.inject(Location)
@@ -428,16 +424,13 @@ describe('InRoleCanActivate', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    providers: [AuthService],
-    imports: [
-        RouterTestingModule.withRoutes([
-            { path: '', pathMatch: 'full', component: TestHomeComponent },
-            { path: 'test', component: TestComponent, canActivate: [InRoleCanActivate('Administradores', 'ADMIN')] },
-            { path: 'bad', component: TestComponent, canActivate: [InRoleCanActivate()] },
-        ]),
-        TestHomeComponent, TestComponent
-    ]
-});
+      providers: [AuthService, provideRouter([
+              { path: '', pathMatch: 'full', component: TestHomeComponent },
+              { path: 'test', component: TestComponent, canActivate: [InRoleCanActivate('Administradores', 'ADMIN')] },
+              { path: 'bad', component: TestComponent, canActivate: [InRoleCanActivate()] },
+      ]), provideLocationMocks(),],
+      imports: [ TestHomeComponent, TestComponent ]
+    });
     router = TestBed.inject(Router);
     auth = TestBed.inject(AuthService);
   });

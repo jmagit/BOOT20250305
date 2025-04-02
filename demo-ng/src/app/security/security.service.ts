@@ -131,7 +131,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
   constructor(private auth: AuthService, private login: LoginService) { }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (!(req.context.get(AUTH_REQUIRED) || req.withCredentials) || !this.auth.isAuthenticated) {
       return next.handle(req);
@@ -139,7 +138,7 @@ export class AuthInterceptor implements HttpInterceptor {
     const authReq = this.addAuthorizationHeader(req)
     return next.handle(authReq).pipe(
       catchError(err => {
-        if ([401, 403].includes(err.status) && err.error?.detail?.toLowerCase()?.includes('token expired')
+        if ([401, 403].includes(err.status) && (err.error?.detail ?? err.error?.message)?.match(/token.+expired/i)
           && !authReq.url.includes('/refresh') && this.auth.isAuthenticated) {
           return this.refreshToken(authReq, next);
         }

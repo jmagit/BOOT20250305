@@ -5,7 +5,6 @@ import { CapitalizePipe, ElipsisPipe, LoggerService, SizerComponent } from '@my/
 import { Unsubscribable } from 'rxjs';
 import { CardComponent, FormButtonsComponent } from 'src/app/common-components';
 import { NotificationService, NotificationType } from 'src/app/common-services';
-import GraficoSvgComponent from '../grafico-svg/grafico-svg.component';
 
 @Component({
   selector: 'app-demos',
@@ -30,7 +29,7 @@ export class DemosComponent {
   public readonly invisible = computed<boolean>(() => !this.visible())
   public readonly estetica = signal({ importante: true, urgente: true, error: false })
 
-  constructor(public vm: NotificationService, out: LoggerService) { }
+  constructor(public vm: NotificationService, public out: LoggerService) { }
 
   public get Fecha(): string { return this.fecha.toISOString(); }
   public set Fecha(value: string) {
