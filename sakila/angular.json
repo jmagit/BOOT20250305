@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "demo-ng": {
+    "sakila": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/demo-ng",
+            "outputPath": "dist/sakila",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -27,13 +27,9 @@
               }
             ],
             "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.css",
-              "node_modules/@fortawesome/fontawesome-free/css/all.css",
               "src/styles.css"
             ],
-            "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -69,14 +65,13 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "demo-ng:build:production"
+              "buildTarget": "sakila:build:production"
             },
             "development": {
-              "buildTarget": "demo-ng:build:development"
+              "buildTarget": "sakila:build:development"
             }
           },
-          "defaultConfiguration": "development",
-          "options": { "proxyConfig": "proxy.conf.json" }
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n"

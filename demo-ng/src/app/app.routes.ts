@@ -30,6 +30,10 @@ export const routes: Routes = [
     path: 'contactos', loadChildren: () => import('./contactos/modulo.module').then(mod => mod.ContactosModule), title: 'contactos',
     /*canActivate: [AuthCanActivateFn]*/
   },
+  {
+    path: 'peliculas', loadChildren: () => import('./peliculas/modulo.module').then(mod => mod.PeliculasModule), title: 'contactos',
+    /*canActivate: [AuthCanActivateFn]*/
+  },
   { path: 'login', component: LoginFormComponent },
   { path: 'registro', component: RegisterUserComponent },
   {matcher: graficoFiles, loadComponent: () => import('./ejemplos/grafico-svg/grafico-svg.component') },
