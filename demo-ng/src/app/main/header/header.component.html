@@ -21,8 +21,8 @@
             <li class="nav-item"><a class="nav-link" data-bs-dismiss="offcanvas" routerLinkActive="active" routerLink="/esto/es/un/formulario"><i class="fa-solid fa-chalkboard-user"></i> formulario</a></li>
             <li class="nav-item"><a class="nav-link" data-bs-dismiss="offcanvas" routerLinkActive="active" routerLink="/un.svg"><i class="fa-solid fa-image"></i> gráfico</a></li>
             <li class="nav-item"><a class="nav-link" data-bs-dismiss="offcanvas" routerLinkActive="active" routerLink="/falsa"><i class="fa-solid fa-ban"></i> falsa</a></li>
-            <li class="nav-item"><a class="nav-link" data-bs-dismiss="offcanvas" routerLinkActive="active" routerLink="/config"><i class="fa-solid fa-gears"></i> config</a></li>
-            <li class="nav-item"><a class="nav-link" data-bs-dismiss="offcanvas" routerLinkActive="active" routerLink="/config/datos"><i class="fa-solid fa-gears"></i> datos</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-dismiss="offcanvas" routerLinkActive="active" routerLink="/config" *ngIf="auth.isAuthenticated"><i class="fa-solid fa-gears"></i> config</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-dismiss="offcanvas" routerLinkActive="active" routerLink="/config/datos" *ngIf="auth.isAuthenticated"><i class="fa-solid fa-gears"></i> datos</a></li>
           </ul>
           <app-login />
         </div>

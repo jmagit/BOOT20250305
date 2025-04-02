@@ -23,7 +23,7 @@ describe('Mis validadores', () => {
       it('Solo blancos', () => {
         const valor = new FormControl('    ')
 
-        let result = isNotBlankValidator(valor)
+        const result = isNotBlankValidator(valor)
 
         expect(result).withContext('Solo blancos').not.toBeNull()
         expect(result?.['isNotBlank']).toBeDefined()
@@ -37,101 +37,6 @@ describe('Mis validadores', () => {
         expect(result).not.toBeNull()
         expect(result?.['isNotBlank']).toBeDefined()
         expect(result?.['isNotBlank']).toBe('No puede estar vacío')
-      });
-
-      ['', '    ', null, undefined].forEach(item => {
-        it(`con valor "${item}"`, () => {
-          const valor = new FormControl(item)
-
-          const result = isNotBlankValidator(valor)
-
-          expect(result).not.toBeNull()
-          expect(result?.['isNotBlank']).toBeDefined()
-          expect(result?.['isNotBlank']).toBe('No puede estar vacío')
-        });
-      });
-    });
-  });
-});
-
-class Calculadora {
-  suma(a: number, b: number) { return a + b }
-  divide(a: number, b: number) {
-    if (b === 0)
-      throw new Error('Divide by 0')
-    return a / b
-  }
-}
-
-describe('Otros ejemplos', () => {
-  function divide(a: number, b: number) {
-    if (b === 0)
-      throw new Error('Divide by 0')
-    return a / b
-  }
-
-  describe('mock', () => {
-    let calc: Calculadora;
-
-    function depediente(a: number, b: number) { return calc.suma(a,b) * 2 }
-
-    beforeEach(() => {
-      calc = new Calculadora()
-    })
-    it('real', () => {
-      expect(calc.suma(2,2)).toBe(4)
-    })
-    it('dependencia con mock', () => {
-      let dep = spyOn(calc, 'suma').and.returnValue(3)
-      expect(depediente(2,2)).toBe(6)
-      expect(dep).toHaveBeenCalledWith(2,2)
-    })
-    it('dependencia real', () => {
-      expect(depediente(1,2)).toBe(6)
-    })
-    it('siempre pasa', () => {
-      let cantidad = 0
-      let total = 100
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      let media = total / cantidad
-      // expect(0.1 + 0.2).toBe(0.3)
-      // expect(1 - 0.9).toBe(0.1)
-      expect((0.1 + 0.2) + (1 - 0.9)).toBe(0.4)
-    })
-  });
-  describe('kk', () => {
-    describe('OK', () => {
-      it('Tengo que probar esto también');
-
-      it('Periódico', () => {
-        expect(divide(1, 3)).toBe(0.3333333333333333)
-        expect(divide(1, 3)).toBeCloseTo(0.3333, 4)
-      });
-
-      it('Divide por 0', () => {
-        expect(1 / 0).toBePositiveInfinity()
-        try {
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          const result = divide(1, 0)
-          fail('No se lanza la excepcion')
-        } catch (error) {
-        }
-        //expect(divide(1, 0)).toThrowError('Divide by 0')
-        expect(() => divide(1, 0)).toThrow()
-      });
-    });
-    describe('KO', () => {
-      it('se ha quedado a medias', () => {
-        const valor = new FormControl('')
-
-        const result = isNotBlankValidator(valor)
-
-        expect(result).not.toBeNull()
-        pending('me falta mirar ...')
-      });
-
-      xit('falla siempre', () => {
-        fail('fallo forzado')
       });
 
       ['', '    ', null, undefined].forEach(item => {
@@ -179,6 +84,7 @@ describe('nifnieValidator', () => {
 
 @Component({
   template: `<input type="text" [(ngModel)]="valor" #myInput="ngModel" nifnie >`,
+  imports: [FormsModule, NIFNIEValidator, ]
 })
 class nifnieValidatorHostComponent {
   @ViewChild('myInput') control?: FormControl
@@ -192,8 +98,7 @@ describe('NIFNIEValidator', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [nifnieValidatorHostComponent, NIFNIEValidator],
-      imports: [FormsModule,]
+      imports: [FormsModule,nifnieValidatorHostComponent, NIFNIEValidator,]
     })
       .compileComponents();
   });
