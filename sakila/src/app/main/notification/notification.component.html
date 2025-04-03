@@ -1,0 +1,17 @@
+@if(VM.HayNotificaciones) {
+<div class="notificaciones">
+  @for(item of VM.Listado; track item.Id) {
+  <div class="alert {{item.Type | i18nSelect:{
+    'error':'alert-danger',
+    'warn':'alert-warning', 'info':'alert-primary',
+    'other':'alert-success' } }} alert-dismissible fade show" role="alert">
+    {{item.Message}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+      (click)="VM.remove($index)"></button>
+  </div>
+  }
+  <div class=" text-center">
+    <button class="btn btn-info" type="button" (click)="VM.clear()">Cerrar</button>
+  </div>
+</div>
+}

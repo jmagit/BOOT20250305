@@ -1,0 +1,19 @@
+{
+  "/api/catalogo/": {
+    "target": "http://localhost:8010",
+    "pathRewrite": { "^/api/catalogo": "/" },
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "/auth": {
+    "target": "http://localhost:8091",
+    "pathRewrite": { "^/auth": "/" },
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "/api": {
+    "target": "http://localhost:4321",
+    "secure": false,
+    "logLevel": "debug"
+  }
+}

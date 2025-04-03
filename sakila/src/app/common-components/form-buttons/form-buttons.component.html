@@ -1,0 +1,11 @@
+<div class="btn-group" role="group">
+  @if (hasSend) {
+  <button class="btn btn-primary" (click)="send.emit(null)" [disabled]="sendDisabled()"><i class="fas fa-check-circle"></i> {{sendText()}}</button>
+  }
+  @if (hasDelete) {
+  <button class="btn btn-danger" (click)="delete.emit(null)"><i class="far fa-trash-alt"></i> {{deleteText()}}</button>
+  }
+  @if (hasAbandon) {
+  <button class="btn btn-success" (click)="abandon.emit(null)"><i class="fas fa-undo-alt"></i> {{abandonText()}}</button>
+  }
+</div>
