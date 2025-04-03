@@ -1,0 +1,13 @@
+<section class="container-fluid">
+  <section class="row">
+    @for (item of Listado; track item.id) {
+      <article class="card col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 col-xxl-1 m-1 px-0" routerLink="{{item.id}}/{{item.titulo | normalize | lowercase}}" >
+        <img src="https://picsum.photos/id/{{item.id}}/150/200" class="card-img-top" [alt]="item.titulo" (error)="imageErrorHandler($event)">
+        <div class="card-footer bg-primary">
+          <a class="link-light" routerLink="{{urlBase}}{{item.id}}/{{item.titulo | normalize | lowercase}}">
+          {{item.titulo}}</a>
+        </div>
+      </article>
+    }
+  </section>
+</section>

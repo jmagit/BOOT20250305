@@ -4,7 +4,8 @@ import { NotificationService } from 'src/app/common-services';
 
 @Component({
   selector: 'app-notification-modal',
-  imports: [ NgClass ],
+  standalone: true,
+  imports: [NgClass],
   templateUrl: './notification-modal.component.html',
   styleUrl: './notification-modal.component.css'
 })

@@ -17,7 +17,33 @@
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
             <li class="nav-item"><a class="nav-link" data-bs-dismiss="offcanvas" routerLinkActive="active" routerLink="/inicio"><i class="fa-solid fa-house"></i> inicio</a></li>
-          </ul>
+            <li class="nav-item d-flex justify-content-start">
+              <a class="nav-link text-center" data-bs-dismiss="offcanvas" routerLink="/catalogo"
+                routerLinkActive="active"><i class="fa-solid fa-film"></i> catalogo</a>
+              </li>
+              <li class="nav-item d-flex justify-content-start">
+                <a class="nav-link text-center" data-bs-dismiss="offcanvas" routerLink="{{auth.isInRoles(roleMantenimiento) ? '/categorias' : '/catalogo/categorias'}}"
+                  routerLinkActive="active"><i class="fa-solid fa-list"></i> categorías</a>
+                </li>
+                @if (auth.isInRoles(roleMantenimiento)) {
+                  <li class="nav-item d-flex justify-content-start">
+                    <a class="nav-link text-center" data-bs-dismiss="offcanvas" routerLink="/actores"
+                      routerLinkActive="active"><i class="fa-solid fa-person-rays"></i> actores</a>
+                    </li>
+                  }
+                  @if (auth.isInRoles(roleMantenimiento)) {
+                    <li class="nav-item d-flex justify-content-start">
+                      <a class="nav-link text-center" data-bs-dismiss="offcanvas" routerLink="/idiomas"
+                        routerLinkActive="active"><i class="fa-solid fa-language"></i> idiomas</a>
+                      </li>
+                    }
+                    @if (auth.isAuthenticated) {
+                      <li class="nav-item d-flex justify-content-start">
+                        <a class="nav-link text-center" data-bs-dismiss="offcanvas" routerLink="/contactos"
+                          routerLinkActive="active"><i class="fa-solid fa-address-book"></i> contactos</a>
+                        </li>
+                      }
+        </ul>
           <app-login />
         </div>
       </div>

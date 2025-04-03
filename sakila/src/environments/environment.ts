@@ -1,8 +1,9 @@
 export const environment = {
-  production: true,
-  ERROR_LEVEL: 1,
-  apiUrl: '/api/catalogo/',
+  production: false,
+  ERROR_LEVEL: 3,
+  apiURL: '/api/',
   securityApiURL: '/auth/',
-  defaultUsername: 'emp@example.com',
-  defaultPassword: 'P@$$w0rd',
+  roleMantenimiento: 'Empleados',
+  defaultUsername: '',
+  defaultPassword: '',
 };

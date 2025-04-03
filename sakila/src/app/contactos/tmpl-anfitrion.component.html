@@ -1,0 +1,7 @@
+@switch (VM.Modo) {
+  @case ('add') { <app-contactos-add /> }
+  @case ('edit') { <app-contactos-edit /> }
+  @case ('view') { <app-contactos-view /> }
+  @default { <app-contactos-list /> }
+}
+

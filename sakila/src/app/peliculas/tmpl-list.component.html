@@ -1,0 +1,71 @@
+
+@switch (search) {
+  @default {
+    <h1 class="display-1">Catálogo <a  class="btn btn-link" data-bs-toggle="collapse" href="#filterForm" role="button" aria-expanded="false" aria-controls="filterForm"><svg class="bi flex-shrink-0 me-2 text-primary" width="24" height="24" role="img" aria-label="filtrar">
+      <use xlink:href="images/crud-sprite.svg#filter" />
+    </svg></a> @if (VM.auth.isInRoles(VM.roleMantenimiento)) {
+      <a class="btn btn-link" routerLink="add"><svg class="bi flex-shrink-0 me-2 text-primary" width="24" height="24" role="img" aria-label="añadir">
+        <use xlink:href="images/crud-sprite.svg#circle-plus" />
+      </svg></a>
+    }
+</h1>
+<div class="collapse mb-2" id="filterForm">
+  <div class="card card-body">
+    <form #miForm="ngForm" class="row gy-2 gx-2 align-items-start">
+      <div class="form-floating col-md-2">
+        <input class="form-control" [class.is-invalid]="title.invalid" type="text" name="title" id="title"
+          [(ngModel)]="VM.Filtro.title" #title="ngModel" placeholder="Que el titulo contenga" maxlength="128">
+        <label for="title">que el titulo contenga:</label>
+        <output class="invalid-feedback" [hidden]="title.valid">{{title.errors | errormsg}}</output>
+      </div>
+      <div class="form-floating col-md-2">
+        <input class="form-control" [class.is-invalid]="minlength.invalid" type="number" name="minlength" id="minlength"
+          [(ngModel)]="VM.Filtro.minlength" #minlength="ngModel" placeholder="duración mínima" min="1" step="1">
+        <label for="minlength">duración mínima (min):</label>
+        <output class="invalid-feedback" [hidden]="minlength.valid">{{minlength.errors | errormsg}}</output>
+      </div>
+      <div class="form-floating col-md-2">
+        <input class="form-control" [class.is-invalid]="maxlength.invalid" type="number" name="maxlength" id="maxlength"
+          [(ngModel)]="VM.Filtro.maxlength" #maxlength="ngModel" placeholder="duración" min="1" step="1">
+        <label for="maxlength">duración máxima (min):</label>
+        <output class="invalid-feedback" [hidden]="maxlength.valid">{{maxlength.errors | errormsg}}</output>
+      </div>
+      <div class="form-floating col-md-6">
+        <select class="form-control form-select" [class.is-invalid]="rating.invalid" name="rating" id="rating"
+          [(ngModel)]="VM.Filtro.rating" #rating="ngModel">
+          <option value="{{null}}"></option>
+          @for (ele of VM.Clasificaciones; track ele.key) {
+            <option [value]="ele.key">{{ele.value}} ({{ele.key}})</option>
+          }
+        </select>
+        <label for="rating">clasificación por edades:</label>
+        <output class="invalid-feedback" [hidden]="rating.valid">{{rating.errors | errormsg}}</output>
+      </div>
+      <div class="btn-group center">
+        <button class="btn btn-primary" (click)="VM.search()" [disabled]="!VM.HasFiltro"><svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="filtrar">
+          <use xlink:href="images/crud-sprite.svg#filter" />
+        </svg>Filtrar</button>
+        <button class="btn btn-danger" (click)="VM.load()"><svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="borrar">
+          <use xlink:href="images/crud-sprite.svg#trash-fill" />
+        </svg>Quitar filtro</button>
+      </div>
+    </form>
+  </div>
+</div>
+  }
+  @case ('categorias') {
+    <ul class="nav nav-underline nav-fill">
+      @for (cat of VM.Categorias; track cat.id) {
+        <li class="nav-item" >
+          <a class="nav-link" aria-current="page" routerLink="." [queryParams]="{ categoria: cat.id}" routerLinkActive="active">{{cat.categoria}}</a>
+        </li>
+      }
+    </ul>
+  }
+}
+<app-peliculas-list-body [Listado]="VM.Listado" (imageError)="VM.imageErrorHandler($event)" />
+@if (pagina && VM.totalRows > 0) {
+  <p-paginator [first]="VM.rowsPerPage*VM.page" [rows]="VM.rowsPerPage" [totalRecords]="VM.totalRows" [pageLinkSize]="5"
+    (onPageChange)="VM.rowsPerPage=$event.rows??12; VM.pageChange($event.page);" [rowsPerPageOptions]="[12, 24, 48, 96]"
+    [showCurrentPageReport]="true" currentPageReportTemplate="{first} - {last} de {totalRecords}" />
+}

@@ -1,5 +1,5 @@
 /* eslint-disable @angular-eslint/no-input-rename */
-import { Component, EventEmitter, input, Output } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
     selector: 'app-list-buttons',
@@ -16,24 +16,24 @@ import { Component, EventEmitter, input, Output } from '@angular/core';
       }
     </div>
   `,
+    standalone: true,
     imports: []
 })
 export class ListButtonsComponent {
-  readonly canView = input(true, { alias: "can-view" });
-  readonly canEdit = input(true, { alias: "can-edit" });
-  readonly canDelete = input(true, { alias: "can-delete" });
-  readonly confirmDeleteMsg = input('', { alias: "confirm-delete-message" });
+  @Input('can-view') canView = true
+  @Input('can-edit') canEdit = true
+  @Input('can-delete') canDelete = true
+  @Input('confirm-delete-message') confirmDeleteMsg = ''
   @Output() view: EventEmitter<null> = new EventEmitter<null>();
   @Output() edit: EventEmitter<null> = new EventEmitter<null>();
   @Output() delete: EventEmitter<null> = new EventEmitter<null>();
 
-  get hasView(): boolean { return this.canView() && this.view.observed; }
-  get hasEdit(): boolean { return this.canEdit() && this.edit.observed; }
-  get hasDelete(): boolean { return this.canDelete() && this.delete.observed; }
+  get hasView(): boolean { return this.canView && this.view.observed; }
+  get hasEdit(): boolean { return this.canEdit && this.edit.observed; }
+  get hasDelete(): boolean { return this.canDelete && this.delete.observed; }
 
   confirmDelete() {
-    const confirmDeleteMsg = this.confirmDeleteMsg();
-    if(!confirmDeleteMsg || window.confirm(confirmDeleteMsg)) {
+    if(!this.confirmDeleteMsg || window.confirm(this.confirmDeleteMsg)) {
       this.delete.emit(null)
     }
   }

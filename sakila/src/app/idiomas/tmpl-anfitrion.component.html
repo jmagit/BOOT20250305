@@ -1,0 +1,59 @@
+<table class="table table-striped table-hover">
+  <thead>
+    <tr class="table-info">
+      <th class="display-4">Lista de idiomas</th>
+      <th class="text-end"><button class="btn btn-primary" (click)="VM.add()"><i class="fas fa-plus"></i>
+    Añadir</button></th>
+  </tr>
+</thead>
+<tbody>
+  @for (item of VM.Listado; track item.id) {
+    <tr>
+      <td>
+        <button class="btn btn-link btn-lg px-0" (click)="VM.edit(item.id)">{{item.idioma}}</button>
+      </td>
+      <td class="align-middle text-end">
+        <div class="btn-group" role="group">
+          <button class="btn btn-success" (click)="VM.edit(item.id)"><i class="fas fa-pen"></i></button>
+          <button class="btn btn-danger" (click)="VM.delete(item.id)"><i class="far fa-trash-alt"></i></button>
+        </div>
+      </td>
+    </tr>
+  }
+</tbody>
+</table>
+@if (VM.Modo!=='list') {
+  <div class="modal fade d-block show" tabindex="-1">
+    <form #miForm="ngForm" class="modal-dialog" >
+      <div class="modal-content">
+        <div class="modal-header bg-gradient bg-info text-white">
+          <h5 class="modal-title">Idioma</h5>
+          <button type="button" class="btn-close" aria-label="Close" (click)="VM.cancel()"></button>
+        </div>
+        <div class="modal-body">
+          @if (VM.notify.HayNotificaciones) {
+            <div class="notificaciones">
+              @for (item of VM.notify.Listado; track item.Id; let i = $index) {
+                <div class="alert alert-danger alert-dismissible fade show"
+                  role="alert">
+                  {{item.Message}}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert"
+                  aria-label="Close" (click)="VM.notify.remove(i)"></button>
+                </div>
+              }
+            </div>
+          }
+          <div class="m-0">
+            <label for="idioma" class="form-label" hidden>idioma:</label>
+            <input class="form-control" [class.is-invalid]="idioma.invalid" type="text" name="idioma" id="idioma" [(ngModel)]="VM.Elemento.idioma"
+              #idioma="ngModel" notblank maxlength="20">
+            <output class="invalid-feedback" [hidden]="idioma.valid || miForm.pristine">{{idioma.errors | errormsg}}</output>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <app-form-buttons (send)="VM.send()" [send-disabled]="miForm.invalid" (cancel)="VM.cancel()" />
+        </div>
+      </div>
+    </form>
+  </div>
+}

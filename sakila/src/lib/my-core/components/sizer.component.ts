@@ -1,39 +1,27 @@
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, input, model } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'my-sizer',
   standalone: true,
   template: `
-    <div [style.font-size.px]="size()">
+    <div [style.font-size.px]="size">
       <button (click)="dec()">-</button>
-      <output [style.margin-left.px]="5" [style.margin-right.px]="5">FontSize: {{size()}}px</output>
+      <output>FontSize: {{size}}px</output>
       <button (click)="inc()">+</button>
     </div>
   `,
-  host: {
-    'role': 'slider',
-    '[attr.aria-valuenow]': 'size()',
-    'attr.aria-valuemin': '8',
-    'attr.aria-valuemax': '40',
-    'tabIndex': '0',
-    '(keydown)': 'handleKeyDown($event)',
-    'style': 'display: inline-block;',
-  }
+  host: { 'role': 'slider', '[attr.aria-valuenow]': 'size' }
 })
 export class SizerComponent {
-  readonly step = input(1, {transform: (value: number):number => Math.abs(value) ?? 1});
-  readonly size = model<number>(12);
+  @Input()  size: number | string = 12;
+  @Output() sizeChange = new EventEmitter<number>();
 
-  dec() : void { this.resize(-this.step()); }
-  inc() : void { this.resize(+this.step()); }
+  dec() : void { this.resize(-1); }
+  inc() : void { this.resize(+1); }
 
-  resize(delta: number) : void { this.size.update(value => Math.min(40, Math.max(8, value + delta)));  }
-
-  handleKeyDown(ev: KeyboardEvent) {
-    switch (ev.key) {
-      case '-': case 'ArrowLeft': case 'ArrowDown': ev.preventDefault(); this.dec();  break;
-      case '+': case 'ArrowRight': case 'ArrowUp': ev.preventDefault(); this.inc();  break;
-   }
+  resize(delta: number) : void {
+    this.size = Math.min(40, Math.max(8, +this.size + delta));
+    this.sizeChange.emit(this.size);
   }
 }

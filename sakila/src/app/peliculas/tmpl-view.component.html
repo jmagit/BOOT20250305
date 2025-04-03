@@ -1,0 +1,96 @@
+<div class="d-flex align-items-start">
+  <h1 class="display-3">{{VM.Elemento.title}}</h1>
+  <span class="position-relative badge rounded-pill bg-danger mt-2 fs-6" style="margin-left: -1rem">{{VM.Elemento.rating}}</span>
+  @if (VM.auth.isInRoles(VM.roleMantenimiento)) {
+    <a class="btn btn-link"
+      [routerLink]="['/', 'catalogo', VM.Elemento.filmId,'edit']"><svg class="bi flex-shrink-0 me-2 text-primary"
+      width="24" height="24" role="img" aria-label="editar">
+      <use xlink:href="images/crud-sprite.svg#pen-fill" />
+    </svg>
+  </a>
+}
+</div>
+<p class="lead" [textContent]="VM.Elemento.description"></p>
+<h2>Ficha</h2>
+<div class="card mb-3">
+  <div class="row g-0">
+    <div class="col-md-4 col-lg-3">
+      <img src="https://picsum.photos/id/{{VM.Elemento.filmId}}/150/200" class="card-img rounded-start rounded-end-0"
+        [alt]="VM.Elemento.title" (error)="VM.imageErrorHandler($event)">
+    </div>
+    <div class="col-md-8 col-lg-9">
+      <dl class="card-body row">
+        <dt class="col-sm-2 text-sm-end">Ref.</dt>
+        <dd class="col-sm-10">{{VM.Elemento.filmId}}</dd>
+        <dt class="col-sm-2 text-sm-end">Categorías</dt>
+        <dd class="col-sm-10">@for (categoria of VM.Elemento.categories; track categoria) {
+          <span class="badge rounded-pill text-bg-primary me-1"
+          >{{categoria}}</span>
+        }</dd>
+        <dt class="col-sm-2 text-sm-end">Año</dt>
+        <dd class="col-sm-10">Estrenada en el {{VM.Elemento.releaseYear}} con una duración de {{VM.Elemento.length}}
+        minutos.</dd>
+        <dt class="col-sm-2 text-sm-end">Idioma</dt>
+        <dd class="col-sm-10">Disponible en {{VM.Elemento.language}}{{VM.Elemento.languageVO ? ` y en versión original en ${VM.Elemento.languageVO}` : ''}}.</dd>
+        <dt class="col-sm-2 text-sm-end">Reparto</dt>
+        <dd class="col-sm-10">
+          <ul class="list-inline">
+            @for (actor of VM.Elemento.actors; track actor) {
+              <li>{{actor | titlecase}}</li>
+            }
+          </ul>
+        </dd>
+        <dt class="col-sm-2 text-sm-end">Contenido Adicional</dt>
+        <dd class="col-sm-10">
+          <ul class="list-inline">
+            @for (contenido of VM.Elemento.specialFeatures; track contenido) {
+              <li>{{contenido}}</li>
+            }
+          </ul>
+        </dd>
+        <dt class="col-sm-2 text-sm-end">Alquiler</dt>
+        <dd class="col-sm-10">Puedes alquilarla {{VM.Elemento.rentalDuration}} {{VM.Elemento.rentalDuration |
+          i18nPlural:({'=1': 'día', 'other': 'días'})}} por tan solo {{VM.Elemento.rentalRate |
+        currency:'EUR':'symbol':'1.2-2'}}.</dd>
+        <dt class="col-sm-2 text-sm-end text-danger">Aviso</dt>
+        <dd class="col-sm-10 text-danger">La penalización si no se devuelve o se devuelve en mal estado es de
+        {{VM.Elemento.replacementCost | currency:'EUR':'symbol':'1.2-2'}}</dd>
+      </dl>
+    </div>
+  </div>
+</div>
+<div>
+  <app-form-buttons (cancel)="VM.cancel()" />
+</div>
+<!-- {
+  "filmId": 1,
+  "description": "A Epic Drama of a Feminist And a Mad Scientist who must Battle a Teacher in The Canadian Rockies",
+  "length": 86,
+  "rating": "PG",
+  "releaseYear": "2006",
+  "rentalDuration": 6,
+  "rentalRate": 0.99,
+  "replacementCost": 20.99,
+  "title": "ACADEMY DINOSAUR",
+  "language": "English",
+  "languageVO": null,
+  "specialFeatures": [
+    "Behind the Scenes",
+    "Deleted Scenes"
+  ],
+  "actors": [
+    "CHRISTIAN GABLE",
+    "JOHNNY CAGE",
+    "LUCILLE TRACY",
+    "MARY KEITEL",
+    "MENA TEMPLE",
+    "OPRAH KILMER",
+    "PENELOPE GUINESS",
+    "ROCK DUKAKIS",
+    "SANDRA PECK",
+    "WARREN NOLTE"
+  ],
+  "categories": [
+    "Documentary"
+  ]
+} -->

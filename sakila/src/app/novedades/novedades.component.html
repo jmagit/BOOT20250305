@@ -1,0 +1,34 @@
+<h1 class="display-1">Novedades</h1>
+<form #miForm="ngForm">
+  <div class="input-group mb-3" [class.is-invalid]="txtFecha.invalid">
+    <span class="input-group-text">Desde:</span>
+    <input type="date" class="form-control" name="fecha" [(ngModel)]="fecha" #txtFecha="ngModel" required pastOrPresent >
+    <button class="btn btn-outline-secondary" type="button" (click)="cargar()" [disabled]="miForm.invalid">buscar</button>
+  </div>
+  <output class="invalid-feedback" [hidden]="txtFecha.valid">{{txtFecha.errors | errormsg}}</output>
+</form>
+@if (novedades?.films?.length > 0) {
+  <h2 class="display-4">Peliculas</h2>
+  <app-peliculas-list-body [Listado]="novedades?.films" urlBase="/catalogo/" (imageError)="imageErrorHandler($event)" />
+}
+@if (novedades?.actors?.length > 0) {
+  <h2 class="display-4">Actores</h2>
+  <div>@for (item of novedades?.actors; track item.id) {
+    <span class="badge text-bg-info me-1"
+    >{{item.nombre}} {{item.apellidos}}</span>
+  }</div>
+}
+@if (novedades?.categories?.length > 0) {
+  <h2 class="display-4">Categorias</h2>
+  <div>@for (item of novedades?.categories; track item.id) {
+    <span class="badge text-bg-info me-1"
+    >{{item.categoria}}</span>
+  }</div>
+}
+@if (novedades?.languages?.length > 0) {
+  <h2 class="display-4">Idioma</h2>
+  <div>@for (item of novedades?.languages; track item.id) {
+    <span class="badge text-bg-info me-1"
+    >{{item.idioma}}</span>
+  }</div>
+}

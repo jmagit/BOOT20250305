@@ -1,10 +1,11 @@
 import { I18nSelectPipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { NotificationService } from 'src/app/common-services';
+import { NotificationService } from '../../common-services';
 
 @Component({
   selector: 'app-notification',
-  imports: [ I18nSelectPipe ],
+  standalone: true,
+  imports: [I18nSelectPipe],
   templateUrl: './notification.component.html',
   styleUrl: './notification.component.css'
 })

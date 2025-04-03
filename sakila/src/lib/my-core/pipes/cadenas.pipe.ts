@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'elipsis'
+    name: 'elipsis',
+    standalone: true
 })
 export class ElipsisPipe implements PipeTransform {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -12,7 +13,8 @@ export class ElipsisPipe implements PipeTransform {
 }
 
 @Pipe({
-  name: 'capitalize'
+    name: 'capitalize',
+    standalone: true
 })
 export class CapitalizePipe implements PipeTransform {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -25,20 +27,10 @@ export class CapitalizePipe implements PipeTransform {
 }
 
 @Pipe({
-  name: 'normalize',
+  name: 'striptags',
   standalone: true
 })
-export class NormalizePipe implements PipeTransform {
-  transform(text: string): string {
-    return (text ?? '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "-")
-  }
-}
-
-@Pipe({
-  name: 'striptags'
-})
 export class StripTagsPipe implements PipeTransform {
-
   transform(text: string, ...allowedTags: string[]): string {
     const etiquetas = `(?:.|\\s)*?`
     return allowedTags.length > 0
@@ -48,7 +40,18 @@ export class StripTagsPipe implements PipeTransform {
 }
 
 @Pipe({
-  name: 'errormsg'
+  name: 'normalize',
+  standalone: true
+})
+export class NormalizePipe implements PipeTransform {
+  transform(text: string): string {
+    return (text??'').normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "-")
+  }
+}
+
+@Pipe({
+    name: 'errormsg',
+    standalone: true
 })
 export class ErrorMessagePipe implements PipeTransform {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -75,3 +78,5 @@ export class ErrorMessagePipe implements PipeTransform {
     return msg.trim();
   }
 }
+
+export const PIPES_CADENAS = [ElipsisPipe, CapitalizePipe, StripTagsPipe, NormalizePipe, ErrorMessagePipe,]

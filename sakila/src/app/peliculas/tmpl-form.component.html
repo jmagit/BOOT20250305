@@ -1,0 +1,161 @@
+<h1 class="display-3">Película</h1>
+<form #miForm="ngForm" class="row gy-2 gx-2 align-items-start">
+  <div class="form-floating">
+    <input class="form-control" [class.is-invalid]="title.invalid" type="text" name="title" id="title"
+      [(ngModel)]="VM.Elemento.title" #title="ngModel" placeholder="title" notblank maxlength="128">
+    <label for="title">título:</label>
+    <output class="invalid-feedback" [hidden]="title.valid">{{title.errors | errormsg}}</output>
+  </div>
+  <div class="form-floating">
+    <textarea class="form-control" [class.is-invalid]="description.invalid" type="text" name="description"
+      id="description" [(ngModel)]="VM.Elemento.description" #description="ngModel" placeholder="description"
+    style="height: 100px"></textarea>
+    <label for="description">descripción:</label>
+    <output class="invalid-feedback" [hidden]="description.valid">{{description.errors | errormsg}}</output>
+  </div>
+  <div class="form-floating col-md-6">
+    <select class="form-control form-select" [class.is-invalid]="rating.invalid" name="rating" id="rating"
+      [(ngModel)]="VM.Elemento.rating" #rating="ngModel">
+      <option value="{{null}}"></option>
+      @for (ele of VM.clasificaciones; track ele.key) {
+        <option [value]="ele.key">{{ele.value}} ({{ele.key}})</option>
+      }
+    </select>
+    <label for="rating">clasificación por edades:</label>
+    <output class="invalid-feedback" [hidden]="rating.valid">{{rating.errors | errormsg}}</output>
+  </div>
+  <div class="form-floating col-md-3">
+    <select class="form-control form-select" [class.is-invalid]="languageId.invalid" name="languageId" id="languageId"
+      [(ngModel)]="VM.Elemento.languageId" #languageId="ngModel" required>
+      @for (lang of VM.idiomas; track lang.id) {
+        <option [value]="lang.id">{{lang.idioma}}</option>
+      }
+    </select>
+    <label for="languageId">idioma:</label>
+    <output class="invalid-feedback" [hidden]="languageId.valid">{{languageId.errors | errormsg}}</output>
+  </div>
+  <div class="form-floating col-md-3">
+    <select class="form-control form-select" name="languageVOId" id="languageVOId"
+      [(ngModel)]="VM.Elemento.languageVOId" #languageVOId="ngModel">
+      <option [value]="null"></option>
+      @for (lang of VM.idiomas; track lang.id) {
+        <option [value]="lang.id">{{lang.idioma}}</option>
+      }
+    </select>
+    <label for="languageVOId">v.o.:</label>
+  </div>
+  <div class="form-floating col-md-2">
+    <input class="form-control" [class.is-invalid]="releaseYear.invalid" type="number" name="releaseYear"
+      id="releaseYear" [(ngModel)]="VM.Elemento.releaseYear" #releaseYear="ngModel" placeholder="releaseYear" min="1901"
+      max="2155" step="1">
+    <label for="releaseYear">año:</label>
+    <output class="invalid-feedback" [hidden]="releaseYear.valid">{{releaseYear.errors | errormsg}}</output>
+  </div>
+  <div class="form-floating col-md-2">
+    <input class="form-control" [class.is-invalid]="length.invalid" type="number" name="length" id="length"
+      [(ngModel)]="VM.Elemento.length" #length="ngModel" placeholder="length" min="1" step="1">
+    <label for="length">duración (min):</label>
+    <output class="invalid-feedback" [hidden]="length.valid">{{length.errors | errormsg}}</output>
+  </div>
+  <div class="form-floating col-md-3">
+    <input class="form-control" [class.is-invalid]="rentalDuration.invalid" type="number" name="rentalDuration"
+      id="rentalDuration" [(ngModel)]="VM.Elemento.rentalDuration" #rentalDuration="ngModel"
+      placeholder="rentalDuration" required min="1" step="1">
+    <label for="rentalDuration">días de alquiler:</label>
+    <output class="invalid-feedback" [hidden]="rentalDuration.valid">{{rentalDuration.errors | errormsg}}</output>
+  </div>
+  <div class="form-floating col-md-3">
+    <input class="form-control" [class.is-invalid]="rentalRate.invalid" type="number" name="rentalRate" id="rentalRate"
+      [(ngModel)]="VM.Elemento.rentalRate" #rentalRate="ngModel" placeholder="rentalRate" required min="0.01"
+      step="0.01">
+    <label for="rentalRate">precio alquiler:</label>
+    <output class="invalid-feedback" [hidden]="rentalRate.valid">{{rentalRate.errors | errormsg}}</output>
+  </div>
+  <div class="form-floating col-md-2">
+    <input class="form-control" [class.is-invalid]="replacementCost.invalid" type="number" name="replacementCost"
+      id="replacementCost" [(ngModel)]="VM.Elemento.replacementCost" #replacementCost="ngModel"
+      placeholder="replacementCost" required min="0.01" step="0.01">
+    <label for="replacementCost">penalización:</label>
+    <output class="invalid-feedback" [hidden]="replacementCost.valid">{{replacementCost.errors | errormsg}}</output>
+  </div>
+  <div class="row mt-2 g-1">
+    <div class="col-md-4">
+      <div class="input-group">
+        <label class="input-group-text" for="actorId">Reparto</label>
+        <select class="form-control form-select" name="actorId" id="actorId" #actorId>
+          @for (item of VM.Actores; track item.id) {
+            <option [value]="item.id">{{item.nombre | titlecase}}</option>
+          }
+        </select>
+        <button class="btn btn-outline-secondary" type="button" (click)="VM.addActor(+actorId.value)"
+          [disabled]="VM.Actores.length === 0"><svg class="bi" width="16" height="16" role="img" aria-label="añadir">
+          <use xlink:href="images/crud-sprite.svg#plus" />
+        </svg></button>
+      </div>
+      <div class="list-group">
+        @for (item of VM.Elemento.actors; track item; let indice = $index) {
+          <li class="list-group-item">
+            {{VM.dameActor | exec:item | titlecase}} <button type="button"
+            class="btn btn-outline-danger position-absolute h-100 top-0 end-0" (click)="VM.removeActor(indice)"><svg
+            class="bi" width="16" height="16" role="img" aria-label="borrar">
+            <use xlink:href="images/crud-sprite.svg#trash-fill" />
+          </svg></button></li>
+        }
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="input-group">
+        <label class="input-group-text" for="categoriaId">Categorías</label>
+        @if(VM.Categorias.length > 0) {
+            <select class="form-control form-select" name="categoriaId" id="categoriaId" #categoriaId>
+            @for (item of VM.Categorias; track item.id) {
+              <option [value]="item.id">{{item.categoria}}</option>
+            }
+          </select>
+          <button class="btn btn-outline-secondary" type="button" (click)="VM.addCategoria(+categoriaId.value)"
+            [disabled]="VM.Categorias.length === 0"><svg class="bi" width="16" height="16" role="img" aria-label="añadir">
+            <use xlink:href="images/crud-sprite.svg#plus" />
+          </svg></button>
+        }
+      </div>
+      <div class="list-group">
+        @for (item of VM.Elemento.categories; track item; let indice = $index) {
+          <li class="list-group-item">
+            {{VM.dameCategoria | exec:item }} <button type="button"
+            class="btn btn-outline-danger position-absolute h-100 top-0 end-0" (click)="VM.removeCategoria(indice)"><svg
+            class="bi" width="16" height="16" role="img" aria-label="borrar">
+            <use xlink:href="images/crud-sprite.svg#trash-fill" />
+          </svg></button></li>
+        }
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="input-group">
+        <label class="input-group-text" for="contenidoId">Contenido Adicional</label>
+        @if(VM.Contenidos.length > 0) {
+          <select class="form-control form-select" name="contenidoId" id="contenidoId" #contenidoId>
+            @for (item of VM.Contenidos; track item) {
+              <option>{{item}}</option>
+            }
+          </select>
+          <button class="btn btn-outline-secondary" type="button" (click)="VM.addContenido(contenidoId.value)"
+            [disabled]="VM.Contenidos.length === 0"><svg class="bi" width="16" height="16" role="img" aria-label="añadir">
+            <use xlink:href="images/crud-sprite.svg#plus" />
+          </svg></button>
+        }
+      </div>
+      <div class="list-group">
+        @for (item of VM.Elemento.specialFeatures; track item; let indice = $index) {
+          <li class="list-group-item">
+            {{item}} <button type="button"
+            class="btn btn-outline-danger position-absolute h-100 top-0 end-0" (click)="VM.removeContenido(indice)"><svg
+            class="bi" width="16" height="16" role="img" aria-label="borrar">
+            <use xlink:href="images/crud-sprite.svg#trash-fill" />
+          </svg></button></li>
+        }
+      </div>
+    </div>
+  </div>
+  <app-form-buttons (send)="VM.send()" [send-disabled]="miForm.invalid" (cancel)="VM.cancel()"
+    (delete)="VM.delete(VM.Elemento.filmId)" [delete-visible]="VM.Modo === 'edit'" />
+</form>

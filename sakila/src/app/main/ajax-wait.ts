@@ -1,16 +1,19 @@
-import { Component, Injectable, inject, signal, computed } from '@angular/core';
+import { Component, Injectable, DoCheck, inject } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpHandlerFn } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AjaxWaitService {
-  private cont = signal<number>(0);
-  public readonly Visible = computed(() => this.cont() > 0);
-  public readonly Oculto = computed(() => !this.Visible());
+  private cont: number = 0;
 
-  public Mostrar(): void { this.cont.update(old => old + 1) }
-  public Ocultar(): void { this.cont.update(old => old - 1) }
+  public get Visible() { return this.cont > 0; }
+  public get Oculto() { return !this.Visible; }
+
+  public Mostrar(): void { this.cont++; }
+  public Ocultar(): void {
+    if (this.cont > 0) { this.cont--; }
+  }
 }
 
 // { provide: HTTP_INTERCEPTORS, useClass: AjaxWaitInterceptor, multi: true, },
@@ -38,7 +41,7 @@ export function ajaxWaitInterceptor(req: HttpRequest<unknown>, next: HttpHandler
 @Component({
     selector: 'app-ajax-wait',
     template: `
-  <div [hidden]="Oculto()">
+  <div [hidden]="Oculto">
     <div class="ajax-wait"></div>
     <!-- <img src="images/loading.gif" alt="Esperando ..."> -->
     <div class="loader"></div>
@@ -84,9 +87,13 @@ export function ajaxWaitInterceptor(req: HttpRequest<unknown>, next: HttpHandler
   `],
     standalone: true,
 })
-export class AjaxWaitComponent {
+export class AjaxWaitComponent implements DoCheck {
+  private oculto = true;
   constructor(private srv: AjaxWaitService) { }
-
-  public get Visible() { return this.srv.Visible }
+  public get Visible() { return !this.Oculto; }
+  // public get Oculto() { return this.oculto; }
   public get Oculto() { return this.srv.Oculto; }
+  ngDoCheck(): void {
+    this.oculto = this.srv.Oculto;
+  }
 }
