@@ -179,7 +179,7 @@ describe('Modulo Contactos', () => {
           expect(service.Modo).withContext('Verify Modo is list').toBe('list')
         }))
 
-        xit('reject confirm', fakeAsync(() => {
+        it('reject confirm', fakeAsync(() => {
           spyOn(window, 'confirm').and.returnValue(false)
           service.delete(+ 1)
           tick()

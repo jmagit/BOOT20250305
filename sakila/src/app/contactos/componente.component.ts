@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
-import { Component, OnInit, OnDestroy, OnChanges, SimpleChanges, forwardRef, input } from '@angular/core';
+import { Component, OnInit, OnDestroy, OnChanges, SimpleChanges, forwardRef, input, Input, effect } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { DatePipe, NgIf, } from '@angular/common';
@@ -91,18 +91,13 @@ export class ContactosViewComponent implements OnInit, OnDestroy {
     styleUrls: ['./componente.component.css'],
     imports: [RouterLink, PaginatorModule]
 })
-export class ContactosListComponent implements OnChanges, OnDestroy {
+export class ContactosListComponent implements OnDestroy {
   readonly page = input(0);
 
-  constructor(protected vm: ContactosViewModelService) { }
-  public get VM(): ContactosViewModelService { return this.vm; }
-  // ngOnInit(): void {
-  //   // this.vm.list();
-  //   this.vm.load()
-  // }
-  ngOnChanges(_changes: SimpleChanges): void {
-    this.vm.load(this.page())
+  constructor(protected vm: ContactosViewModelService) {
+    effect(() => vm.load(this.page()))
   }
+  public get VM(): ContactosViewModelService { return this.vm; }
   ngOnDestroy(): void { this.vm.clear(); }
 }
 @Component({
@@ -150,14 +145,12 @@ export class ContactosEditComponent implements OnInit, OnDestroy {
     styleUrls: ['./componente.component.css'],
     imports: [DatePipe]
 })
-export class ContactosViewComponent implements OnChanges {
-  readonly id = input<string>();
+export class ContactosViewComponent {
   constructor(protected vm: ContactosViewModelService, protected router: Router) { }
   public get VM(): ContactosViewModelService { return this.vm; }
-  ngOnChanges(_changes: SimpleChanges): void {
-    const id = this.id();
-    if (id) {
-      this.vm.view(+id);
+  @Input() set id(key: string) {
+    if (+key) {
+      this.vm.view(+key);
     } else {
       this.router.navigate(['/404.html']);
     }

@@ -1,5 +1,5 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, withComponentInputBinding } from '@angular/router';
+import { ActivatedRouteSnapshot, BaseRouteReuseStrategy, provideRouter, RouteReuseStrategy, withComponentInputBinding } from '@angular/router';
 
 import { routes } from './app.routes';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi, withInterceptors } from '@angular/common/http';
@@ -11,14 +11,20 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
 
+class NotRouteReuseStrategy extends BaseRouteReuseStrategy {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  override shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean { return false; }
+}
+
 export const appConfig: ApplicationConfig = {
   providers: [
     LoggerService,
     {provide: ERROR_LEVEL, useValue: environment.ERROR_LEVEL},
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withComponentInputBinding()),
+    {provide: RouteReuseStrategy, useClass: NotRouteReuseStrategy},
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true, },
     provideHttpClient(withInterceptorsFromDi(), withInterceptors([ ajaxWaitInterceptor ])),
     provideAnimationsAsync(), providePrimeNG({ theme: { preset: Aura } })
-]
+  ]
 };

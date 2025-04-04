@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent, PageNotFoundComponent } from './main';
 import { environment } from 'src/environments/environment';
 import { PeliculasListComponent, routes as PeliculasRoutes } from './peliculas';
+import { routes as ActoresRoutes } from './actores';
 import { AuthWithRedirectCanActivate, InRoleCanActivate, AuthCanActivateFn, LoginFormComponent, RegisterUserComponent } from './security';
 
 export const routes: Routes = [
@@ -12,8 +13,7 @@ export const routes: Routes = [
   { path: 'catalogo', children: PeliculasRoutes, title: 'catalogo' },
   { path: 'actores/:id/:nom/:idPeli/:tit', redirectTo: '/catalogo/:idPeli/:tit', title: 'catalogo' },
   {
-    path: 'actores', loadChildren: () => import('./actores/modulo.module'), title: 'actores',
-    canActivate: [AuthWithRedirectCanActivate('/login'), InRoleCanActivate(environment.roleMantenimiento)]
+    path: 'actores', children: ActoresRoutes, title: 'actores'
   },
   {
     path: 'categorias', loadChildren: () => import('./categorias/modulo.module'), title: 'categorias',

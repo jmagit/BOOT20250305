@@ -100,13 +100,12 @@ export class PeliculasEditComponent implements OnChanges {
   standalone: true,
   imports: [RouterLink, CommonModule, FormButtonsComponent, ]
 })
-export class PeliculasViewComponent implements OnChanges {
-  @Input() id?: string;
+export class PeliculasViewComponent {
   constructor(protected vm: PeliculasViewModelService, protected router: Router) { }
   public get VM(): PeliculasViewModelService { return this.vm; }
-  ngOnChanges(_changes: SimpleChanges): void {
-    if (this.id) {
-      this.vm.view(+this.id);
+  @Input() set id(key: string) {
+    if (+key) {
+      this.vm.view(+key);
     } else {
       this.router.navigate(['/404.html']);
     }

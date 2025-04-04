@@ -3,7 +3,7 @@
     <tr class="table-info">
       <th class="display-4">Lista de actores</th>
       <th class="text-end">
-        <button class="btn btn-primary" routerLink="add"><i class="fas fa-plus"></i> Añadir</button>
+        <button class="btn btn-primary" routerLink="add" *ngIf="VM.auth.isInRoles(roleMantenimiento)"><i class="fas fa-plus"></i> Añadir</button>
       </th>
     </tr>
   </thead>
@@ -15,8 +15,8 @@
         </td>
         <td class="align-middle text-end">
           <div class="btn-group" role="group">
-            <button class="btn btn-success" [routerLink]="[item.id, 'edit']"><i class="fas fa-pen"></i></button>
-            <button class="btn btn-danger" (click)="VM.delete(item.id, VM.load)"><i class="far fa-trash-alt"></i></button>
+            <button class="btn btn-success" [routerLink]="[item.id, 'edit']" *ngIf="VM.auth.isInRoles(roleMantenimiento)"><i class="fas fa-pen"></i></button>
+            <button class="btn btn-danger" (click)="VM.delete(item.id, VM.load)" *ngIf="VM.auth.isInRoles(roleMantenimiento)"><i class="far fa-trash-alt"></i></button>
           </div>
         </td>
       </tr>

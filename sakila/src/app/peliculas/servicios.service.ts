@@ -54,15 +54,6 @@ export class PeliculasViewModelService extends ViewModelService<any, number> {
   }
 
   // Filtrado
-  // @Schema(description = "Que el titulo contenga")
-  // String title,
-  // @Schema(description = "Duración mínima de la pelicula")
-  // Integer minlength,
-  // @Schema(description = "Duración máxima de la pelicula")
-  // Integer maxlength,
-  // @Schema(description = "La clasificación por edades asignada a la película", allowableValues = {"G", "PG", "PG-13", "R", "NC-17"})
-  // @Pattern(regexp = "^(G|PG|PG-13|R|NC-17)$")
-  // String rating,
 
   private filtro: any = { title: '', minlength: '', maxlength: '', rating: '' }
   public get Filtro(): any { return this.filtro; }

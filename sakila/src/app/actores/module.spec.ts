@@ -181,16 +181,20 @@ describe('Modulo Actores', () => {
       })
 
       describe('delete', () => {
-        xit('accept confirm', fakeAsync(() => {
+        it('accept confirm', fakeAsync(() => {
           spyOn(window, 'confirm').and.returnValue(true)
+          service.list()
+          tick()
           service.delete(3)
           tick()
           expect(service.Listado.length).withContext('Verify Listado length').toBe(dataMock.length - 1)
           expect(service.Modo).withContext('Verify Modo is list').toBe('list')
         }))
 
-        xit('reject confirm', fakeAsync(() => {
+        it('reject confirm', fakeAsync(() => {
           spyOn(window, 'confirm').and.returnValue(false)
+          service.list()
+          tick()
           service.delete(+1)
           tick()
           expect((dao as Record<string, any>)['listado'].length).withContext('Verify Listado length').toBe(dataMock.length)

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { CommonModule } from '@angular/common';
-import { Injectable, Component, OnChanges, OnDestroy, Input, SimpleChanges, OnInit } from '@angular/core';
+import { Injectable, Component, OnChanges, OnDestroy, Input, SimpleChanges, OnInit, effect, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { LoggerService, ErrorMessagePipe, NormalizePipe, NotblankValidator, UppercaseValidator, TypeValidator } from '@my/core';
@@ -11,6 +11,7 @@ import { FormButtonsComponent } from '../common-components';
 import { ActoresDAOService, NotificationService, NavigationService } from '../common-services';
 import { PeliculasListBodyComponent } from '../peliculas';
 import { AuthService } from '../security';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -58,15 +59,15 @@ export class ActoresViewModelService extends ViewModelService<any, number> {
   standalone: true,
   imports: [RouterLink, PaginatorModule, CommonModule, NormalizePipe, ]
 })
-export class ActoresListComponent implements OnChanges, OnDestroy {
-  @Input() page = 0
-  constructor(protected vm: ActoresViewModelService) { }
+export class ActoresListComponent implements OnDestroy {
+  readonly roleMantenimiento = environment.roleMantenimiento
+  readonly page = input(0);
+
+  constructor(protected vm: ActoresViewModelService) {
+    effect(() => vm.load(this.page()))
+  }
 
   public get VM(): ActoresViewModelService { return this.vm; }
-
-  ngOnChanges(_changes: SimpleChanges): void {
-    this.vm.load(this.page)
-  }
 
   ngOnDestroy(): void { this.vm.clear(); }
 }
@@ -113,13 +114,12 @@ export class ActoresEditComponent implements OnChanges {
   standalone: true,
   imports: [ FormButtonsComponent, PeliculasListBodyComponent, ]
 })
-export class ActoresViewComponent implements OnChanges {
-  @Input() id?: string;
+export class ActoresViewComponent {
   constructor(protected vm: ActoresViewModelService, protected router: Router) { }
   public get VM(): ActoresViewModelService { return this.vm; }
-  ngOnChanges(_changes: SimpleChanges): void {
-    if (this.id) {
-      this.vm.view(+this.id);
+  @Input() set id(key: string) {
+    if (+key) {
+      this.vm.view(+key);
     } else {
       this.router.navigate(['/404.html']);
     }
