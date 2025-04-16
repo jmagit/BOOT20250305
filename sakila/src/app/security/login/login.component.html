@@ -1,13 +1,11 @@
 @if (visible) {
   @if (loginSrv.isAuthenticated) {
-    <div class="mt-1">
-      <small class="mt-1 my-lg-0" >
-        <span class="text me-1" id="userData">Hola {{loginSrv.Name}} </span>
-        <button class="btn btn-outline-dark btn-sm" type="button" title="desconectar" aria-label="enviar logout" (click)="logInOut()"><i class="fas fa-sign-out-alt"></i></button>
-      </small>
+    <div class="d-flex">
+      <span class="navbar-text me-1" id="userData">Hola {{loginSrv.Name}} </span>
+      <button class="btn btn-outline-dark btn-sm" type="button" title="desconectar" aria-label="enviar logout" (click)="logInOut()"><i class="fas fa-sign-out-alt"></i></button>
     </div>
   } @else {
-    <form #logForm="ngForm" class="form-inline my-2 my-lg-0">
+    <form #logForm="ngForm" class="form-inline d-flex">
       <div class="input-group" role="group" aria-label="Login Form">
         <input name="usr" class="form-control-sm" [size]="8" type="text" [(ngModel)]="txtUsuario" required minlength="4"
           placeholder="Usuario" autocomplete="username">

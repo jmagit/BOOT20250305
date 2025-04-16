@@ -6,6 +6,7 @@ import java.util.Optional;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -31,8 +32,8 @@ public class ActoresResource {
 	private ActorRepository dao;
 	
 	@GetMapping
-	public List<Actor> getAll(@PageableDefault(size=20, sort = {"firstName", "lastName"})  Pageable page) {
-		return dao.findAll(page).getContent();
+	public Page<Actor> getAll(@PageableDefault(size=20, sort = {"firstName", "lastName"})  Pageable page) {
+		return dao.findAll(page);
 	}
 	@GetMapping(consumes = "text/plain")
 	public String getAll() {

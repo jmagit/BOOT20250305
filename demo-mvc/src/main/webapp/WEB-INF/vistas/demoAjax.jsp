@@ -1,15 +1,8 @@
 <%@ include file="parts/header.jsp" %>
 <h1>Actores</h1>
-<p>
-	<button type="button" onClick="pide(0)">1</button>
-	<button type="button" onClick="pide(1)">2</button>
-	<button type="button" onClick="pide(2)">3</button>
-	<button type="button" onClick="pide(3)">4</button>
-	<button type="button" onClick="pide(4)">5</button>
-	<button type="button" onClick="pide(5)">6</button>
-	<button type="button" onClick="pide(6)">7</button>
-	<button type="button" onClick="pide(7)">8</button>
-</p>
+<nav aria-label="Page navigation">
+  <ul id="paginador" class="pagination"></ul>
+</nav>
 
 <ul id="rslt"></ul>
 
@@ -17,15 +10,23 @@
 <script type="text/javascript">
 function pide(pag) {
 	$('#rslt').empty();
+	$('#paginador').empty();
 	$.get('/api/actores?page='+pag).then(
 			function(data) {
-				var lst = eval(data);
+				if(data.totalPages === 0) return
+				var lst = data.content;
 				lst.forEach(function(item) {
 					$('#rslt').append('<li>' + item.firstName + ' ' + item.lastName + '</li>');
 				});
-				
+				if(data.totalPages === 1) return
+				for(let i = 1; i <= data.totalPages; i++) {
+					var btn = $('<button>').addClass('page-link').text(i).on('click', function(ev) { pide(+ev.target.textContent-1) })
+					var li = $('<li>').addClass('page-item').append(btn)
+					if(i === data.number + 1) li.addClass('active')
+					$('#paginador').append(li)
+				}
 			}
-			);
+		);
 }
 
 pide(0);

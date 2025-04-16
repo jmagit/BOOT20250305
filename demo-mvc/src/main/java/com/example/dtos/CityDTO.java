@@ -16,7 +16,6 @@ import lombok.NoArgsConstructor;
 
 @Data @AllArgsConstructor @NoArgsConstructor
 public class CityDTO implements Serializable {
-	@NonNull
 	private long cityId;
 	@NonNull
 	@Size(min=1, max=50)

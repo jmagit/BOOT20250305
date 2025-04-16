@@ -5,19 +5,23 @@
 <h1>Listado de Actores</h1>
 
 <table class="table table-hover table-striped table-bordered">
-	<tr>
-		<th>Actores</th>
-		<td><a class="btn btn-primary" href="/actores/add"><i class="fas fa-plus"></i></a></td>
-	</tr>
-	<c:forEach var="elemento" items="${listado.getContent()}">
-		<tr>
-			<td><a href="/actores/${elemento.actorId}/${elemento.firstName}/${elemento.lastName}">${elemento.firstName} ${elemento.lastName}</a></td>
-			<td>
-				<a href="/actores/${elemento.actorId}/edit" class="btn btn-success"><i class="fas fa-pen"></i></a>
-				<a href="/actores/${elemento.actorId}/delete"class="btn btn-danger"><i class="fas fa-trash"></i></a>
-			</td>
-		</tr>
-	</c:forEach>
+    <thead>
+        <tr>
+            <th>Actores</th>
+            <td class="text-end"><a class="btn btn-primary" href="/actores/add"><i class="fas fa-plus"></i></a></td>
+        </tr>
+    </thead>
+    <tbody>
+        <c:forEach var="elemento" items="${listado.getContent()}">
+            <tr>
+                <td><a href="/actores/${elemento.actorId}/${elemento.firstName}/${elemento.lastName}">${elemento.firstName} ${elemento.lastName}</a></td>
+                <td class="text-end">
+                    <a href="/actores/${elemento.actorId}/edit" class="btn btn-success"><i class="fas fa-pen"></i></a>
+                    <a href="/actores/${elemento.actorId}/delete" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                </td>
+            </tr>
+        </c:forEach>
+    </tbody>
 </table>
 <ul class="pagination">
   	<c:if test = "${listado.hasPrevious()}">

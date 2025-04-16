@@ -25,7 +25,6 @@ public class Actor implements Serializable {
 
 	@Id
 	@Column(name="ACTOR_ID")
-	@NonNull
 	private long actorId;
 
 	@Column(name="FIRST_NAME")

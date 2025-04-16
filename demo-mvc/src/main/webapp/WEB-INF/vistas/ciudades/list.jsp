@@ -6,13 +6,13 @@
 	<tr>
 		<th>Ciudades</th>
 		<th>Paises</th>
-		<td><a class="btn btn-primary" href="/ciudades/add"><i class="fas fa-plus"></i></a></td>
+		<td class="text-end"><a class="btn btn-primary" href="/ciudades/add"><i class="fas fa-plus"></i></a></td>
 	</tr>
 	<c:forEach var="elemento" items="${listado.getContent()}">
 		<tr>
 			<td><a href="/ciudades/${elemento.cityId}/${elemento.city}">${elemento.city}</a></td>
 			<td>${elemento.country.country}</td>
-			<td>
+			<td class="text-end">
 				<a href="/ciudades/${elemento.cityId}/edit" class="btn btn-success"><i class="fas fa-pen"></i></a>
 				<a href="/ciudades/${elemento.cityId}/delete"class="btn btn-danger"><i class="fas fa-trash"></i></a>
 			</td>

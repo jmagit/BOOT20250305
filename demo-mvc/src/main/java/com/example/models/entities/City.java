@@ -23,7 +23,6 @@ public class City implements Serializable {
 
 	@Id
 	@Column(name="CITY_ID")
-	@NonNull
 	private long cityId;
 
 	@NonNull
@@ -31,7 +30,7 @@ public class City implements Serializable {
 	private String city;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="LAST_UPDATE")
+	@Column(name="LAST_UPDATE", insertable = false, updatable = false)
 	private Date lastUpdate;
 
 	//bi-directional many-to-one association to Address
