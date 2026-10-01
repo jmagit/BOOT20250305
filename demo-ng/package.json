@@ -17,7 +17,7 @@
     "@angular/forms": "^22.0.8",
     "@angular/platform-browser": "^22.0.8",
     "@angular/platform-browser-dynamic": "^22.0.8",
-    "@angular/router": "^22.0.8",
+    "@angular/router": "^22.2.0",
     "@fortawesome/fontawesome-free": "^6.7.2",
     "@primeng/themes": "^19.0.10",
     "bootstrap": "^5.3.3",
